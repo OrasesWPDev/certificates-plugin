@@ -1,4 +1,3 @@
-  cat > .github/workflows/deploy.yml << 'EOL'
   name: Increment Version
 
   on:
