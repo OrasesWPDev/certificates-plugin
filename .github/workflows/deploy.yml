@@ -1,59 +1,59 @@
-  name: Increment Version
+name: Increment Version
 
-  on:
-    push:
-      branches:
-        - main
+on:
+  push:
+    branches:
+      - main
 
-  # Add permissions to allow the workflow to push changes
-  permissions:
-    contents: write
+# Add permissions to allow the workflow to push changes
+permissions:
+  contents: write
 
-  jobs:
-    update-version:
-      runs-on: ubuntu-latest
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-        - name: Set up PHP
-          uses: shivammathur/setup-php@v2
-          with:
-            php-version: '7.4'
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
 
-        - name: Get version from branch
-          id: get_version
-          run: |
-            CURRENT_VERSION=$(grep "Version:" certificates-plugin.php | awk -F': ' '{print $2}' | tr -d ' ')
-            echo "Current version: $CURRENT_VERSION"
-            echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
-            
-            # Split version into major.minor.patch
-            IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
-            MAJOR=${VERSION_PARTS[0]}
-            MINOR=${VERSION_PARTS[1]}
-            PATCH=${VERSION_PARTS[2]}
-            
-            # Increment patch version
-            NEW_PATCH=$((PATCH + 1))
-            NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
-            echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-            echo "New version will be: $NEW_VERSION"
+      - name: Get version from branch
+        id: get_version
+        run: |
+          CURRENT_VERSION=$(grep "Version:" certificates-plugin.php | awk -F': ' '{print $2}' | tr -d ' ')
+          echo "Current version: $CURRENT_VERSION"
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+          
+          # Split version into major.minor.patch
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          
+          # Increment patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "New version will be: $NEW_VERSION"
 
-        - name: Update version in files
-          run: |
-            # Update version in main plugin file
-            sed -i "s/Version: ${{ env.CURRENT_VERSION }}/Version: ${{ env.NEW_VERSION }}/" certificates-plugin.php
-            
-            # Update version constant in main plugin file
-            sed -i "s/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.CURRENT_VERSION }}' );/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.NEW_VERSION }}' );/" certificates-plugin.php
-            
-            # Commit the version change
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add certificates-plugin.php
-            git commit -m "Bump version to ${{ env.NEW_VERSION }}"
-            git push
+      - name: Update version in files
+        run: |
+          # Update version in main plugin file
+          sed -i "s/Version: ${{ env.CURRENT_VERSION }}/Version: ${{ env.NEW_VERSION }}/" certificates-plugin.php
+          
+          # Update version constant in main plugin file
+          sed -i "s/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.CURRENT_VERSION }}' );/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.NEW_VERSION }}' );/" certificates-plugin.php
+          
+          # Commit the version change
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add certificates-plugin.php
+          git commit -m "Bump version to ${{ env.NEW_VERSION }}"
+          git push
