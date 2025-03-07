@@ -25,8 +25,8 @@ define( 'CERTIFICATES_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CERTIFICATES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'CERTIFICATES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
-// Check if ACF is active
-function certificates_plugin_has_acf() {
+// Check if ACF is active - renamed function to avoid conflicts
+function cert_plugin_has_acf() {
     return class_exists( 'ACF' );
 }
 
@@ -38,8 +38,8 @@ function certificates_plugin_init() {
     // Include required files
     require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-cpt.php';
 
-    // Only load ACF integration if ACF is active
-    if ( certificates_plugin_has_acf() ) {
+    // Only load ACF integration if ACF is active - updated function name
+    if ( cert_plugin_has_acf() ) {
         require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-acf.php';
     } else {
         // Admin notice if ACF is not active
@@ -51,7 +51,7 @@ function certificates_plugin_init() {
 
     // Initialize classes
     new Certificates_CPT();
-    if ( certificates_plugin_has_acf() ) {
+    if ( cert_plugin_has_acf() ) { // Updated function name
         new Certificates_ACF();
     }
     new Certificates_Shortcode();
@@ -189,7 +189,7 @@ function certificates_force_acf_sync() {
     }
 
     // Path to the ACF JSON file
-    $json_file = CERTIFICATES_PLUGIN_PATH . 'acf-json/group_67bf615a25b23.json';
+    $json_file = CERTIFICATES_PLUGIN_PATH . 'acf-json/group_certificates_fields.json';
     if (file_exists($json_file)) {
         $json_content = file_get_contents($json_file);
 

@@ -1,9 +1,9 @@
 {
-  "key": "group_67bf615a25b23",
+  "key": "group_certificates_87ac925b11",
   "title": "Certificates Field Group",
   "fields": [
     {
-      "key": "field_card_description_67bf6150",
+      "key": "field_card_description_certificates_11a",
       "label": "Card Description",
       "name": "card_description",
       "aria-label": "",
@@ -25,7 +25,7 @@
       "new_lines": ""
     },
     {
-      "key": "field_overview_67bf6151",
+      "key": "field_overview_certificates_11b",
       "label": "Overview",
       "name": "overview",
       "aria-label": "",
@@ -47,7 +47,7 @@
       "delay": 0
     },
     {
-      "key": "field_intro_67bf6152",
+      "key": "field_intro_certificates_11c",
       "label": "Intro",
       "name": "intro",
       "aria-label": "",
@@ -69,7 +69,7 @@
       "delay": 0
     },
     {
-      "key": "field_apply_button_url_67bf6153",
+      "key": "field_apply_button_url_certificates_11d",
       "label": "Apply Now Button URL",
       "name": "apply_button_url",
       "aria-label": "",
@@ -88,7 +88,7 @@
       "placeholder": ""
     },
     {
-      "key": "field_prepare_apply_67bf6154",
+      "key": "field_prepare_apply_certificates_11e",
       "label": "Prepare & Apply",
       "name": "prepare_apply",
       "aria-label": "",
@@ -110,7 +110,7 @@
       "delay": 0
     },
     {
-      "key": "field_earn_certificate_67bf6155",
+      "key": "field_earn_certificate_certificates_11f",
       "label": "Earn Your Certificate",
       "name": "earn_certificate",
       "aria-label": "",
@@ -132,7 +132,7 @@
       "delay": 0
     },
     {
-      "key": "field_next_steps_67bf6156",
+      "key": "field_next_steps_certificates_11g",
       "label": "Next Steps",
       "name": "next_steps",
       "aria-label": "",
@@ -154,7 +154,7 @@
       "delay": 0
     },
     {
-      "key": "field_documents_67bf6157",
+      "key": "field_documents_certificates_11h",
       "label": "Documents",
       "name": "documents",
       "aria-label": "",
