@@ -62,6 +62,86 @@ function certificates_plugin_init() {
 }
 add_action( 'plugins_loaded', 'certificates_plugin_init' );
 
+/**
+ * Add Help/Documentation page for the plugin
+ */
+function certificates_add_help_page() {
+    add_submenu_page(
+        'edit.php?post_type=certificate',  // Parent menu slug
+        'Certificates Help',               // Page title
+        'How to Use',                      // Menu title
+        'edit_posts',                      // Capability
+        'certificates-help',               // Menu slug
+        'certificates_help_page_content'   // Callback function
+    );
+}
+add_action('admin_menu', 'certificates_add_help_page', 11);
+
+/**
+ * Display the help page content
+ */
+function certificates_help_page_content() {
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+        <div class="card" style="max-width: 800px; padding: 20px; margin-top: 20px;">
+            <h2>How to Use Certificates Shortcode</h2>
+
+            <p>You can display certificates on any page or post using the shortcode below:</p>
+
+            <div style="background: #f5f5f5; padding: 15px; border-left: 4px solid #2271b1; font-family: monospace; margin: 20px 0;">
+                [certificates]
+            </div>
+
+            <h3>Available Options</h3>
+            <table class="widefat" style="margin-top: 15px;">
+                <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Default</th>
+                    <th>Example</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>count</code></td>
+                    <td>Number of certificates to display. Use -1 for all.</td>
+                    <td>-1</td>
+                    <td><code>[certificates count="4"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>columns</code></td>
+                    <td>Number of columns in the grid display.</td>
+                    <td>4</td>
+                    <td><code>[certificates columns="3"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>category</code></td>
+                    <td>Filter by category slug. Separate multiple with commas.</td>
+                    <td>empty</td>
+                    <td><code>[certificates category="featured,popular"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>order</code></td>
+                    <td>Order of certificates (ASC or DESC).</td>
+                    <td>ASC</td>
+                    <td><code>[certificates order="DESC"]</code></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Example</h3>
+            <p>To display 3 certificates from the "featured" category in 2 columns:</p>
+            <div style="background: #f5f5f5; padding: 15px; border-left: 4px solid #2271b1; font-family: monospace; margin: 20px 0;">
+                [certificates count="3" columns="2" category="featured"]
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 // Admin notice for missing ACF
 function certificates_plugin_acf_missing_notice() {
     ?>

@@ -1,0 +1,2845 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+
+Additional Info:
+----------------
+
+================================================================
+Directory Structure
+================================================================
+.github/
+  workflows/
+    deploy.yml
+acf-json/
+  group_certificates_fields.json
+  README.md
+assets/
+  js/
+    certificates.js
+  certificates-shortcode.css
+  certificates.css
+  responsive-certificates.css
+includes/
+  class-certificates-acf.php
+  class-certificates-cpt.php
+  class-certificates-shortcode.php
+templates/
+  archive-certificate.php
+  single-certificate.php
+.gitignore
+certificates-plugin.php
+
+================================================================
+Files
+================================================================
+
+================
+File: .github/workflows/deploy.yml
+================
+name: Increment Version
+
+on:
+  push:
+    branches:
+      - main
+
+# Add permissions to allow the workflow to push changes
+permissions:
+  contents: write
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Get version from branch
+        id: get_version
+        run: |
+          CURRENT_VERSION=$(grep "Version:" certificates-plugin.php | awk -F': ' '{print $2}' | tr -d ' ')
+          echo "Current version: $CURRENT_VERSION"
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+          
+          # Split version into major.minor.patch
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          
+          # Increment patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "New version will be: $NEW_VERSION"
+
+      - name: Update version in files
+        run: |
+          # Update version in main plugin file
+          sed -i "s/Version: ${{ env.CURRENT_VERSION }}/Version: ${{ env.NEW_VERSION }}/" certificates-plugin.php
+          
+          # Update version constant in main plugin file
+          sed -i "s/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.CURRENT_VERSION }}' );/define( 'CERTIFICATES_PLUGIN_VERSION', '${{ env.NEW_VERSION }}' );/" certificates-plugin.php
+          
+          # Commit the version change
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add certificates-plugin.php
+          git commit -m "Bump version to ${{ env.NEW_VERSION }}"
+          git push
+
+================
+File: acf-json/group_certificates_fields.json
+================
+{
+  "key": "group_certificates_87ac925b11",
+  "title": "Certificates Field Group",
+  "fields": [
+    {
+      "key": "field_card_description_certificates_11a",
+      "label": "Card Description",
+      "name": "card_description",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "Enter a short description that will appear on the certificate card (25-30 words maximum)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "maxlength": "",
+      "rows": 4,
+      "placeholder": "",
+      "new_lines": ""
+    },
+    {
+      "key": "field_overview_certificates_11b",
+      "label": "Overview",
+      "name": "overview",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    },
+    {
+      "key": "field_intro_certificates_11c",
+      "label": "Intro",
+      "name": "intro",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    },
+    {
+      "key": "field_apply_button_url_certificates_11d",
+      "label": "Apply Now Button URL",
+      "name": "apply_button_url",
+      "aria-label": "",
+      "type": "url",
+      "instructions": "Enter the URL for the Apply Now button",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_prepare_apply_certificates_11e",
+      "label": "Prepare & Apply",
+      "name": "prepare_apply",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    },
+    {
+      "key": "field_earn_certificate_certificates_11f",
+      "label": "Earn Your Certificate",
+      "name": "earn_certificate",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    },
+    {
+      "key": "field_next_steps_certificates_11g",
+      "label": "Next Steps",
+      "name": "next_steps",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    },
+    {
+      "key": "field_documents_certificates_11h",
+      "label": "Documents",
+      "name": "documents",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "relevanssi_exclude": 0,
+      "default_value": "",
+      "allow_in_bindings": 0,
+      "tabs": "all",
+      "toolbar": "full",
+      "media_upload": 1,
+      "delay": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "certificate"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "modified": 1741363339
+}
+
+================
+File: acf-json/README.md
+================
+# ACF JSON Synchronization
+
+This directory is used by Advanced Custom Fields (ACF) for field group synchronization.
+
+## How it works
+
+1. When field groups are created or modified through the WordPress admin, ACF will save the JSON definitions in this directory.
+2. When the plugin is installed on a new site, ACF will read the JSON files from this directory and import the field groups.
+3. This ensures that your field definitions stay consistent across different environments.
+
+Do not delete this directory, as it's required for the proper functioning of field synchronization.
+
+================
+File: assets/js/certificates.js
+================
+/**
+ * Certificates Plugin Scripts
+ */
+(function($) {
+    'use strict';
+
+    $(document).ready(function() {
+        // Smooth scroll for sticky menu links only
+        $('.sticky-menu a').on('click', function(e) {
+            if (this.hash !== '') {
+                e.preventDefault();
+                const hash = this.hash;
+
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 250 // Adjust this offset value as needed
+                }, 800);
+            }
+        });
+
+        // Handle "Back to Top" links separately - scroll to page top
+        $('.back-to-top a').on('click', function(e) {
+            e.preventDefault();
+
+            // Scroll to the top of the page
+            $('html, body').animate({
+                scrollTop: 0
+            }, 800);
+        });
+
+        // Highlight sticky menu items on scroll
+        $(window).on('scroll', function() {
+            const scrollPosition = $(window).scrollTop();
+
+            // Check each section
+            $('.row[id]').each(function() {
+                const currentSection = $(this);
+                const sectionTop = currentSection.offset().top - 300; // Increased offset
+                const sectionBottom = sectionTop + currentSection.outerHeight();
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    $('.sticky-menu a').removeClass('active');
+                    $('.sticky-menu a[href="#' + currentSection.attr('id') + '"]').addClass('active');
+                }
+            });
+        });
+    });
+})(jQuery);
+
+================
+File: assets/certificates-shortcode.css
+================
+/**
+ * Certificates Shortcode Styles
+ */
+
+/* ----------------------------------------
+   1. GRID LAYOUT
+   ---------------------------------------- */
+.certificates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+/* ----------------------------------------
+   2. CERTIFICATE ITEM - Individual Cards
+   ---------------------------------------- */
+.certificate-item {
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.certificate-card {
+    height: 100%;
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: none; /* Remove shadow */
+    border: none; /* Remove border */
+}
+
+.certificate-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.certificate-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #F4F4F4;
+}
+
+/* ----------------------------------------
+   3. CERTIFICATE IMAGE
+   ---------------------------------------- */
+.certificate-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.certificate-thumbnail {
+    max-width: 140px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* ----------------------------------------
+   4. CERTIFICATE CONTENT - Text Elements
+   ---------------------------------------- */
+.certificate-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.certificate-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #333;
+}
+
+.certificate-description {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #7C7C7C;
+    margin-bottom: 15px;
+    text-align: center;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 110px; /* Backup for browsers that don't support line-clamp */
+}
+
+/* ----------------------------------------
+   5. CERTIFICATE BUTTON - Call to Action
+   ---------------------------------------- */
+.certificate-button {
+    text-align: center;
+    margin-top: auto;
+}
+
+.certificate-button .button {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 15px;
+    background-color: #f98e2b; /* Orange button */
+    color: #fff;
+    border: 2px solid #f98e2b;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.certificate-button .button:hover {
+    background-color: rgba(255, 255, 255, 0.64); /* Semi-transparent white background on hover */
+    color: #f98e2b; /* Orange text on hover */
+    border: 1px solid #f98e2b; /* 1px orange border */
+}
+
+/* ----------------------------------------
+   6. NO RESULTS MESSAGE
+   ---------------------------------------- */
+.no-certificates {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+    color: #666;
+}
+
+================
+File: assets/certificates.css
+================
+/**
+ * Certificates Plugin Styles
+ */
+
+/* ----------------------------------------
+   1. GRID LAYOUT - Archive & Shortcode
+   ---------------------------------------- */
+.certificates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.certificate-item {
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.certificate-card {
+    height: 100%;
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.certificate-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.certificate-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.certificate-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.certificate-thumbnail {
+    max-width: 140px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.certificate-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.certificate-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.certificate-description {
+    font-size: 14px;
+    color: #7C7C7C;
+    margin-bottom: 15px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.certificate-button {
+    text-align: center;
+    margin-top: auto;
+}
+
+.certificate-button .button {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+/* ----------------------------------------
+   2. SECTION STRUCTURE HANDLING
+   ---------------------------------------- */
+.section-wrapper {
+    width: 100%;
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.section-wrapper.alternate-background-lightgrey {
+    background-color: #f8f8f8; /* Lighter grey to match live site */
+}
+
+.section-wrapper.alternate-background-white {
+    background-color: #FFFFFF;
+}
+
+.section-content {
+    position: relative;
+    padding: 40px 0; /* Increased from 30px to 40px */
+}
+
+/* Add more vertical spacing between sections */
+#intro, #prepare-apply, #earn-certificate, #next-steps, #documents {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/* Add padding to containers within sections */
+.section-wrapper .container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Add margin to sections */
+#overview + .section-wrapper,
+#intro + .section-wrapper,
+#prepare-apply + .section-wrapper,
+#earn-certificate + .section-wrapper,
+#next-steps + .section-wrapper {
+    margin-top: 30px;
+}
+
+/* ----------------------------------------
+   3. SINGLE CERTIFICATE PAGE
+   ---------------------------------------- */
+.certificate-single .container-of-boxes {
+    margin-bottom: 40px;
+}
+
+.certificate-single {
+    color: #444;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.certificate-single p,
+.certificate-single li,
+.certificate-single div {
+    color: #444; /* Ensure consistent text color throughout */
+}
+
+.certificate-single h2 {
+    margin-bottom: 20px;
+}
+
+.certificate-single .container {
+    max-width: 1140px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+}
+
+/* Section spacing improvements */
+#overview, #intro, #prepare-apply, #earn-certificate, #next-steps, #documents {
+    padding: 20px 0;
+}
+
+/* Row and column alignment */
+.certificate-single .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.certificate-single .col-12,
+.certificate-single .col-md-9,
+.certificate-single .col-md-3 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* ----------------------------------------
+   4. OVERVIEW SECTION
+   ---------------------------------------- */
+#overview {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#overview .container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#overview p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #444;
+    font-weight: 600;
+}
+
+/* Remove spacing that was needed for the title */
+#overview + .section-wrapper {
+    margin-top: 20px;
+}
+
+
+/* ----------------------------------------
+   5. STICKY NAVIGATION MENU
+   ---------------------------------------- */
+.sticky-top {
+    position: fixed;
+    top: 200px; /* Fixed position below Flatsome header */
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 89; /* Below Flatsome's z-index */
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: top 0.3s ease;
+    padding-top: 10px; /* Added padding to the top */
+}
+
+/* Add some space to the container to avoid content jumps */
+.container-of-boxes {
+    padding-top: 60px; /* Adjust based on your sticky nav height */
+}
+
+.credential-sections-links {
+    padding: 15px 0 10px; /* Increased top padding from 10px to 15px */
+    width: 100%;
+}
+
+.sticky-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sticky-menu li {
+    margin: 0 15px;
+}
+
+.sticky-menu a {
+    color: #333;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.sticky-menu a:hover,
+.sticky-menu a.active {
+    color: #f98e2b; /* Orange color from live site */
+    font-weight: 600;
+}
+
+/* Highlight effect for active menu item */
+.sticky-menu a.active {
+    position: relative;
+}
+
+.sticky-menu a.active:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f98e2b;
+}
+
+/* ----------------------------------------
+   6. BACK TO TOP LINKS
+   ---------------------------------------- */
+.back-to-top {
+    position: absolute;
+    top: 30px;
+    right: 0;
+}
+
+.back-to-top a {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-to-top a:hover {
+    color: #f98e2b; /* Changed from #007bff to match site orange */
+    text-decoration: none; /* Removed underline */
+}
+
+.back-to-top a:before {
+    content: "↑";
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+/* ----------------------------------------
+   7. SECTION TITLES
+   ---------------------------------------- */
+.text-to-uppercase {
+    text-transform: uppercase;
+    font-weight: 700; /* Increased from 600 to 700 for bolder headings */
+    margin-bottom: 25px; /* Increased from 20px */
+    color: #2c6c3e;
+    font-size: 24px;
+    padding-left: 0; /* Remove any indentation */
+    line-height: 1.2;
+    letter-spacing: 0.5px; /* Add slight letter spacing for emphasis */
+}
+
+/* Fix specific section title alignment */
+#intro .text-to-uppercase,
+#prepare-apply .text-to-uppercase,
+#earn-certificate .text-to-uppercase,
+#next-steps .text-to-uppercase,
+#documents .text-to-uppercase {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* Add more distinct styling to section headings */
+.certificate-single h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #2c6c3e;
+}
+
+/* Add more space after section titles */
+.text-to-uppercase + p,
+.text-to-uppercase + div,
+.text-to-uppercase + ul,
+.text-to-uppercase + ol {
+    margin-top: 15px;
+}
+
+/* ----------------------------------------
+   8. CERTIFICATE FEATURED IMAGE
+   ---------------------------------------- */
+.certificate-featured-image {
+    text-align: center;
+    margin-top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+}
+
+.certificate-featured-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    background-color: transparent !important;
+}
+
+/* ----------------------------------------
+   9. ACTION BUTTONS
+   ---------------------------------------- */
+.certificate-action-buttons {
+    margin: 20px 0;
+}
+
+.certificate-action-buttons .button,
+.certificate-action-buttons a.button {
+    margin-right: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    background-color: #f98e2b;
+    border: 2px solid #f98e2b;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+}
+
+.certificate-action-buttons .button:hover,
+.certificate-action-buttons a.button:hover {
+    background-color: transparent;
+    color: #f98e2b;
+    text-decoration: none !important;
+}
+
+/* ----------------------------------------
+   10. CONTENT FORMATTING
+   ---------------------------------------- */
+.certificate-field-content {
+    line-height: 1.6;
+    color: #444;
+    font-size: 16px;
+}
+
+.certificate-field-content h4 {
+    margin-top: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #2c6c3e; /* Match green color from the live site */
+    font-size: 18px;
+}
+
+.certificate-field-content p {
+    margin-bottom: 1.2em;
+}
+
+.certificate-field-content strong,
+.certificate-field-content b {
+    font-weight: 600;
+    color: #333;
+}
+
+.certificate-field-content ul,
+.certificate-field-content ol {
+    margin-left: 2rem;
+    margin-bottom: 1.8rem;
+    padding-left: 0;
+}
+
+.certificate-field-content ul {
+    list-style-type: disc;
+}
+
+.certificate-field-content ol {
+    list-style-type: decimal;
+}
+
+.certificate-field-content li {
+    margin-bottom: 0.8em;
+    padding-left: 0.3em;
+    line-height: 1.6;
+}
+
+/* Add space between list items */
+.certificate-field-content li + li {
+    margin-top: 8px;
+}
+
+/* Improve nested lists */
+.certificate-field-content ul ul,
+.certificate-field-content ol ol,
+.certificate-field-content ul ol,
+.certificate-field-content ol ul {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.certificate-field-content table {
+    width: auto;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.certificate-field-content table th,
+.certificate-field-content table td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.certificate-field-content table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.certificate-field-content a {
+    color: #f98e2b;
+    text-decoration: underline;
+}
+
+.certificate-field-content a:hover {
+    text-decoration: none;
+}
+
+/* ----------------------------------------
+   11. HEADER STYLING
+   ---------------------------------------- */
+/* Header background styling */
+.certificate-single .section-wrapper.credentials-header {
+    background-color: rgb(0, 44, 92);
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Ensure the header section spans full width */
+.certificate-single .credentials-header section.section {
+    background-color: rgb(0, 44, 92) !important;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Breadcrumb styling */
+.certificate-single .credentials-header span,
+.certificate-single .credentials-header span a,
+.certificate-single .credentials-header span.breadcrumb_last,
+.certificate-single .credentials-header .yoast-divider {
+    color: white !important;
+}
+
+/* Remove margin from column inside header */
+.certificate-single .credentials-header .col-12 {
+    margin: 0;
+    padding: 0;
+}
+
+================
+File: assets/responsive-certificates.css
+================
+/**
+ * Certificates Plugin Responsive Styles
+ */
+
+/* ----------------------------------------
+   1. SMALL SCREENS (MOBILE)
+   ---------------------------------------- */
+@media (max-width: 767px) {
+    /* Sticky Menu */
+    .sticky-menu li {
+        margin: 0 8px;
+    }
+
+    .sticky-menu a {
+        font-size: 12px;
+    }
+
+    .back-to-top {
+        position: relative;
+        top: 0;
+        right: 0;
+        text-align: center;
+        margin-top: 10px;
+        display: block;
+    }
+
+    /* Certificate Cards */
+    .certificate-title {
+        font-size: 14px;
+    }
+
+    .certificate-description {
+        font-size: 12px;
+    }
+
+    .certificate-button .button {
+        font-size: 12px;
+        padding: 3px 10px;
+    }
+
+    /* Image positioning in intro section */
+    #intro .col-md-9 {
+        order: 1;
+    }
+
+    #intro .col-md-3 {
+        order: 2;
+        padding-top: 30px;
+    }
+}
+
+/* ----------------------------------------
+   2. MEDIUM SCREENS (TABLETS)
+   ---------------------------------------- */
+@media (min-width: 768px) and (max-width: 991px) {
+    .certificate-item {
+        padding: 10px;
+    }
+
+    #intro .col-md-3 {
+        padding-top: 30px;
+    }
+
+    .certificate-card-body {
+        padding: 15px;
+    }
+
+    .certificate-title {
+        font-size: 15px;
+    }
+
+    .certificate-description {
+        font-size: 13px;
+    }
+
+    .sticky-menu li {
+        margin: 0 10px;
+    }
+}
+
+/* ----------------------------------------
+   3. LARGE SCREENS ADJUSTMENTS
+   ---------------------------------------- */
+@media (min-width: 992px) {
+    .certificate-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Ensure image is properly positioned on desktop */
+    #intro .col-md-9 {
+        order: 1;
+    }
+
+    #intro .col-md-3 {
+        order: 2;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ----------------------------------------
+   4. INTRO SECTION SPECIFIC IMAGE CONTAINER
+   ---------------------------------------- */
+#intro .col-md-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .certificate-single .col-md-9 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+
+    .certificate-single .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* ----------------------------------------
+   5. CERTIFICATES SHORTCODE RESPONSIVE STYLES
+   ---------------------------------------- */
+@media (max-width: 767px) {
+    /* Shortcode Card Styles - Mobile */
+    .certificate-title {
+        font-size: 13px;
+    }
+
+    .certificate-description {
+        font-size: 11px;
+    }
+
+    .certificate-button .button {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    .certificate-thumbnail {
+        max-width: 120px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Shortcode Card Styles - Tablet */
+    .certificate-card-body {
+        padding: 15px;
+    }
+
+    .certificate-title {
+        font-size: 13px;
+    }
+}
+
+================
+File: includes/class-certificates-acf.php
+================
+<?php
+/**
+ * ACF Field Group Registration
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Class to handle registration and synchronization of ACF field groups.
+ */
+class Certificates_ACF {
+
+    /**
+     * Constructor.
+     */
+    public function __construct() {
+        // Register local JSON save point
+        add_filter('acf/settings/save_json', array($this, 'acf_json_save_point'));
+
+        // Register local JSON load point
+        add_filter('acf/settings/load_json', array($this, 'acf_json_load_point'));
+
+        // Hook into ACF initialization - important for correct loading order
+        add_action('acf/init', array($this, 'initialize_acf_sync'), 5);
+
+        // Add a notice if there are field groups that need syncing
+        add_action('admin_notices', array($this, 'sync_admin_notice'));
+
+        // Add an action to handle syncing
+        add_action('admin_post_certificates_sync_acf', array($this, 'handle_sync_action'));
+
+        // Add logging for debugging
+        if (WP_DEBUG) {
+            error_log('Certificates_ACF initialized');
+        }
+    }
+
+    /**
+     * Define ACF JSON save point
+     *
+     * @param string $path The path to save ACF JSON files.
+     * @return string The modified path.
+     */
+    public function acf_json_save_point( $path ) {
+        // Create acf-json directory in plugin if it doesn't exist
+        $plugin_acf_path = CERTIFICATES_PLUGIN_PATH . 'acf-json';
+
+        if ( ! file_exists( $plugin_acf_path ) ) {
+            mkdir( $plugin_acf_path, 0755, true );
+
+            if ( WP_DEBUG ) {
+                error_log( 'Created ACF JSON directory at: ' . $plugin_acf_path );
+            }
+        }
+
+        // Set save point to plugin directory
+        return $plugin_acf_path;
+    }
+
+    /**
+     * Register ACF JSON load point
+     *
+     * @param array $paths Array of paths ACF will load JSON files from.
+     * @return array Modified array of paths.
+     */
+    public function acf_json_load_point( $paths ) {
+        // Ensure paths is an array
+        if (!is_array($paths)) {
+            $paths = array();
+        }
+
+        // Add our path to the load paths
+        $paths[] = CERTIFICATES_PLUGIN_PATH . 'acf-json';
+
+        if ( WP_DEBUG ) {
+            error_log( 'Added ACF JSON load path: ' . CERTIFICATES_PLUGIN_PATH . 'acf-json' );
+        }
+
+        return $paths;
+    }
+
+    /**
+     * Initialize ACF sync
+     *
+     * @param mixed $context The context parameter passed by WordPress.
+     */
+    public function initialize_acf_sync($context = null) {
+        // Check if we're in the admin and have ACF functions
+        if (!is_admin() || !function_exists('acf_get_field_group')) {
+            return;
+        }
+
+        // Get all JSON field groups
+        $json_groups = $this->get_acf_json_files();
+
+        if (empty($json_groups) || !is_array($json_groups)) {
+            if (WP_DEBUG) {
+                error_log('No valid JSON field groups found for import');
+            }
+            return;
+        }
+
+        foreach ($json_groups as $json_group) {
+            if (!is_array($json_group) || !isset($json_group['key'])) {
+                if (WP_DEBUG) {
+                    error_log('Invalid field group format: ' . print_r($json_group, true));
+                }
+                continue;
+            }
+
+            // Try to get existing field group
+            $existing = acf_get_field_group($json_group['key']);
+
+            // If this field group doesn't exist in the database yet, create it
+            if (!$existing) {
+                // Import the field group
+                acf_import_field_group($json_group);
+                if (WP_DEBUG) {
+                    error_log('Imported field group: ' . (isset($json_group['title']) ? $json_group['title'] : 'Unknown'));
+                }
+            }
+        }
+    }
+
+    /**
+     * Get all field groups from JSON files
+     *
+     * @return array Array of field groups from JSON files
+     */
+    private function get_acf_json_files() {
+        $json_groups = array();
+        $path = CERTIFICATES_PLUGIN_PATH . 'acf-json';
+
+        if (!is_dir($path)) {
+            if (WP_DEBUG) {
+                error_log('ACF JSON directory does not exist: ' . $path);
+            }
+            return $json_groups;
+        }
+
+        $files = scandir($path);
+        if (!$files || !is_array($files)) {
+            if (WP_DEBUG) {
+                error_log('Could not scan ACF JSON directory: ' . $path);
+            }
+            return $json_groups;
+        }
+
+        foreach ($files as $file) {
+            // Skip non-JSON files and hidden files
+            if (pathinfo($file, PATHINFO_EXTENSION) !== 'json' || substr($file, 0, 1) === '.') {
+                continue;
+            }
+
+            $json_file = $path . '/' . $file;
+            if (!file_exists($json_file) || !is_readable($json_file)) {
+                if (WP_DEBUG) {
+                    error_log('Cannot read JSON file: ' . $json_file);
+                }
+                continue;
+            }
+
+            $json_content = file_get_contents($json_file);
+            if ($json_content === false) {
+                if (WP_DEBUG) {
+                    error_log('Failed to read JSON file content: ' . $json_file);
+                }
+                continue;
+            }
+
+            $json_data = json_decode($json_content, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                if (WP_DEBUG) {
+                    error_log('JSON decode error for file ' . $file . ': ' . json_last_error_msg());
+                }
+                continue;
+            }
+
+            if (!is_array($json_data)) {
+                if (WP_DEBUG) {
+                    error_log('JSON data is not an array: ' . $file);
+                }
+                continue;
+            }
+
+            foreach ($json_data as $field_group) {
+                if (is_array($field_group) && isset($field_group['key'])) {
+                    $json_groups[] = $field_group;
+                } else {
+                    if (WP_DEBUG) {
+                        error_log('Invalid field group structure in ' . $file);
+                    }
+                }
+            }
+        }
+
+        return $json_groups;
+    }
+
+    /**
+     * Display admin notice if there are field groups that need syncing
+     *
+     * @param string $context The context parameter passed by WordPress.
+     */
+    public function sync_admin_notice($context = '') {
+        // Only show on ACF admin pages
+        $screen = get_current_screen();
+        if (!$screen || !is_object($screen) || !isset($screen->id) || strpos($screen->id, 'acf-field-group') === false) {
+            return;
+        }
+
+        $sync_required = $this->get_field_groups_requiring_sync();
+
+        if (!empty($sync_required) && is_array($sync_required)) {
+            ?>
+            <div class="notice notice-warning is-dismissible">
+                <p>
+                    <?php
+                    printf(
+                        _n(
+                            'There is %d Certificates field group that requires synchronization.',
+                            'There are %d Certificates field groups that require synchronization.',
+                            count($sync_required),
+                            'certificates-plugin'
+                        ),
+                        count($sync_required)
+                    );
+                    ?>
+                    <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=certificates_sync_acf'), 'certificates_sync_acf')); ?>" class="button button-primary">
+                        <?php _e('Sync Field Groups', 'certificates-plugin'); ?>
+                    </a>
+                </p>
+            </div>
+            <?php
+        }
+    }
+
+    /**
+     * Get field groups that require synchronization
+     *
+     * @return array Array of field groups that require synchronization
+     */
+    private function get_field_groups_requiring_sync() {
+        if (!function_exists('acf_get_field_group')) {
+            return array();
+        }
+
+        $sync_required = array();
+        $json_groups = $this->get_acf_json_files();
+
+        if (!is_array($json_groups)) {
+            if (WP_DEBUG) {
+                error_log('JSON groups is not an array: ' . print_r($json_groups, true));
+            }
+            return array();
+        }
+
+        foreach ($json_groups as $json_group) {
+            // Verify json_group is an array and has the required key
+            if (!is_array($json_group) || !isset($json_group['key'])) {
+                if (WP_DEBUG) {
+                    error_log('Invalid JSON group format: ' . print_r($json_group, true));
+                }
+                continue;
+            }
+
+            // Get database version
+            $db_group = acf_get_field_group($json_group['key']);
+
+            // If DB version doesn't exist or has a different modified time, it needs sync
+            if (!$db_group) {
+                $sync_required[] = $json_group;
+            } else if (isset($json_group['modified']) && isset($db_group['modified']) && $db_group['modified'] != $json_group['modified']) {
+                $sync_required[] = $json_group;
+            }
+        }
+
+        return $sync_required;
+    }
+
+    /**
+     * Handle the synchronization action
+     */
+    public function handle_sync_action() {
+        // Security check - use a more inclusive approach for capabilities
+        if (!current_user_can('manage_acf') && !current_user_can('edit_posts') && !current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.', 'certificates-plugin'));
+        }
+
+        // Verify nonce for security
+        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'certificates_sync_acf')) {
+            wp_die(__('Security check failed.', 'certificates-plugin'));
+        }
+
+        $json_groups = $this->get_acf_json_files();
+        $count = 0;
+
+        if (is_array($json_groups)) {
+            foreach ($json_groups as $json_group) {
+                if (is_array($json_group) && isset($json_group['key'])) {
+                    acf_import_field_group($json_group);
+                    $count++;
+                }
+            }
+        }
+
+        // Redirect to the main ACF field groups list
+        wp_redirect(add_query_arg(array(
+            'post_type' => 'acf-field-group',
+            'sync' => 'complete',
+            'count' => $count
+        ), admin_url('edit.php')));
+
+        exit;
+    }
+
+    /**
+     * Register certificate field groups programmatically if needed
+     *
+     * This is a fallback in case the JSON synchronization doesn't work
+     * or if you prefer to register fields via PHP.
+     */
+    public function register_field_groups() {
+        // If no field groups exist in ACF, register them programmatically
+        if (!$this->field_groups_exist()) {
+            $this->register_certificates_fields();
+
+            if (WP_DEBUG) {
+                error_log('Registered certificate field groups programmatically');
+            }
+        }
+    }
+
+    /**
+     * Check if certificate field groups already exist
+     *
+     * @return bool True if field groups exist, false otherwise.
+     */
+    private function field_groups_exist() {
+        // Check if ACF function exists
+        if (!function_exists('acf_get_field_groups')) {
+            return false;
+        }
+
+        // Get field groups
+        $field_groups = acf_get_field_groups(array(
+            'post_type' => 'certificate',
+        ));
+
+        // Return true if certificate field groups exist and it's an array with elements
+        return is_array($field_groups) && !empty($field_groups);
+    }
+
+    /**
+     * Register certificate field groups
+     */
+    private function register_certificates_fields() {
+        // Only proceed if ACF function exists
+        if (!function_exists('acf_add_local_field_group')) {
+            return;
+        }
+
+        // Register Certificates Field Group
+        acf_add_local_field_group(array(
+            'key' => 'group_certificates_fields',
+            'title' => 'Certificates Field Group',
+            'fields' => array(
+                array(
+                    'key' => 'field_card_description',
+                    'label' => 'Card Description',
+                    'name' => 'card_description',
+                    'aria-label' => '',
+                    'type' => 'textarea',
+                    'instructions' => 'Enter a short description that will appear on the certificate card (25-30 words maximum)',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'rows' => 4,
+                    'placeholder' => '',
+                    'new_lines' => '',
+                ),
+                array(
+                    'key' => 'field_overview',
+                    'label' => 'Overview',
+                    'name' => 'overview',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+                array(
+                    'key' => 'field_intro',
+                    'label' => 'Intro',
+                    'name' => 'intro',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+                array(
+                    'key' => 'field_apply_button_url',
+                    'label' => 'Apply Now Button URL',
+                    'name' => 'apply_button_url',
+                    'aria-label' => '',
+                    'type' => 'url',
+                    'instructions' => 'Enter the URL for the Apply Now button',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                ),
+                array(
+                    'key' => 'field_prepare_apply',
+                    'label' => 'Prepare & Apply',
+                    'name' => 'prepare_apply',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+                array(
+                    'key' => 'field_earn_certificate',
+                    'label' => 'Earn Your Certificate',
+                    'name' => 'earn_certificate',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+                array(
+                    'key' => 'field_next_steps',
+                    'label' => 'Next Steps',
+                    'name' => 'next_steps',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+                array(
+                    'key' => 'field_documents',
+                    'label' => 'Documents',
+                    'name' => 'documents',
+                    'aria-label' => '',
+                    'type' => 'wysiwyg',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'full',
+                    'media_upload' => 1,
+                    'delay' => 0,
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'certificate',
+                    ),
+                ),
+            ),
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'hide_on_screen' => '',
+            'active' => true,
+            'description' => '',
+            'show_in_rest' => 0,
+        ));
+    }
+}
+
+================
+File: includes/class-certificates-cpt.php
+================
+<?php
+/**
+ * Custom Post Type Registration
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Class to handle registration of the Certificates custom post type.
+ */
+class Certificates_CPT {
+
+    /**
+     * Constructor.
+     */
+    public function __construct() {
+        // Register the custom post type.
+        add_action( 'init', array( $this, 'register_post_type' ) );
+
+        // Add meta boxes
+        add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+        add_action( 'save_post_certificate', array( $this, 'save_meta_box_data' ) );
+
+        // Add custom admin columns
+        add_filter( 'manage_certificate_posts_columns', array( $this, 'add_admin_columns' ) );
+        add_action( 'manage_certificate_posts_custom_column', array( $this, 'custom_column_content' ), 10, 2 );
+        add_filter( 'manage_edit-certificate_sortable_columns', array( $this, 'sortable_columns' ) );
+        add_action( 'pre_get_posts', array( $this, 'sort_by_display_order' ) );
+
+        // Add template filters
+        add_filter( 'single_template', array( $this, 'single_template' ) );
+        add_filter( 'archive_template', array( $this, 'archive_template' ) );
+
+        // Add logging for debugging.
+        if ( WP_DEBUG ) {
+            error_log( 'Certificates_CPT initialized' );
+        }
+    }
+
+    /**
+     * Register Certificates custom post type.
+     */
+    public function register_post_type() {
+        register_post_type( 'certificate', $this->get_post_type_args() );
+
+        // Log registration for debugging
+        if ( WP_DEBUG ) {
+            error_log( 'Certificate post type registered' );
+        }
+    }
+
+    /**
+     * Get post type arguments
+     */
+    private function get_post_type_args() {
+        return array(
+            'labels'              => $this->get_post_type_labels(),
+            'description'         => __( 'Certificates custom post type', 'certificates-plugin' ),
+            'public'              => true,
+            'hierarchical'        => false,
+            'exclude_from_search' => false,
+            'publicly_queryable'  => true,
+            'show_ui'             => true,
+            'show_in_menu'        => true,
+            'show_in_admin_bar'   => true,
+            'show_in_nav_menus'   => true,
+            'show_in_rest'        => true,
+            'menu_position'       => null,
+            'menu_icon'           => 'dashicons-media-document',
+            'capability_type'     => 'post',
+            'supports'            => array(
+                'title',
+                'editor',
+                'page-attributes',
+                'thumbnail',
+                'custom-fields',
+            ),
+            'taxonomies'          => array(
+                'category',
+                'post_tag',
+            ),
+            'has_archive'         => false,
+            'rewrite' => array(
+                'slug' => 'credentials/certificate',
+                'with_front' => false,
+                'feeds' => false,
+                'pages' => true,
+            ),
+            'query_var'           => true,
+            'can_export'          => true,
+        );
+    }
+
+    /**
+     * Get post type labels
+     */
+    private function get_post_type_labels() {
+        return array(
+            'name'                  => _x( 'Certificates', 'Post type general name', 'certificates-plugin' ),
+            'singular_name'         => _x( 'Certificate', 'Post type singular name', 'certificates-plugin' ),
+            'menu_name'             => _x( 'Certificates', 'Admin Menu text', 'certificates-plugin' ),
+            'all_items'             => __( 'All Certificates', 'certificates-plugin' ),
+            'edit_item'             => __( 'Edit Certificate', 'certificates-plugin' ),
+            'view_item'             => __( 'View Certificate', 'certificates-plugin' ),
+            'view_items'            => __( 'View Certificates', 'certificates-plugin' ),
+            'add_new_item'          => __( 'Add New Certificate', 'certificates-plugin' ),
+            'add_new'               => __( 'Add New Certificate', 'certificates-plugin' ),
+            'new_item'              => __( 'New Certificate', 'certificates-plugin' ),
+            'parent_item_colon'     => __( 'Parent Certificate:', 'certificates-plugin' ),
+            'search_items'          => __( 'Search Certificates', 'certificates-plugin' ),
+            'not_found'             => __( 'No certificates found', 'certificates-plugin' ),
+            'not_found_in_trash'    => __( 'No certificates found in Trash', 'certificates-plugin' ),
+            'archives'              => __( 'Certificate Archives', 'certificates-plugin' ),
+            'attributes'            => __( 'Certificate Attributes', 'certificates-plugin' ),
+            'insert_into_item'      => __( 'Insert into certificate', 'certificates-plugin' ),
+            'uploaded_to_this_item' => __( 'Uploaded to this certificate', 'certificates-plugin' ),
+            'filter_items_list'     => __( 'Filter certificates list', 'certificates-plugin' ),
+            'filter_by_date'        => __( 'Filter certificates by date', 'certificates-plugin' ),
+            'items_list_navigation' => __( 'Certificates list navigation', 'certificates-plugin' ),
+            'items_list'            => __( 'Certificates list', 'certificates-plugin' ),
+            'item_published'        => __( 'Certificate published.', 'certificates-plugin' ),
+            'item_published_privately' => __( 'Certificate published privately.', 'certificates-plugin' ),
+            'item_reverted_to_draft' => __( 'Certificate reverted to draft.', 'certificates-plugin' ),
+            'item_scheduled'        => __( 'Certificate scheduled.', 'certificates-plugin' ),
+            'item_updated'          => __( 'Certificate updated.', 'certificates-plugin' ),
+            'item_link'             => __( 'Certificate Link', 'certificates-plugin' ),
+            'item_link_description' => __( 'A link to a certificate.', 'certificates-plugin' ),
+        );
+    }
+
+    /**
+     * Add meta boxes for certificate post type
+     */
+    public function add_meta_boxes() {
+        add_meta_box(
+            'certificate_display_order',
+            __( 'Display Order', 'certificates-plugin' ),
+            array( $this, 'display_order_meta_box' ),
+            'certificate',
+            'side',
+            'high'
+        );
+    }
+
+    /**
+     * Display order meta box callback
+     */
+    public function display_order_meta_box( $post ) {
+        // Add nonce for security
+        wp_nonce_field( 'certificate_display_order_nonce', 'certificate_display_order_nonce' );
+
+        // Get current value
+        $value = get_post_meta( $post->ID, '_certificate_display_order', true );
+
+        echo '<label for="certificate_display_order">';
+        echo __( 'Enter display order (lower numbers appear first):', 'certificates-plugin' );
+        echo '</label> ';
+        echo '<input type="number" id="certificate_display_order" name="certificate_display_order" value="' . esc_attr( $value ) . '" min="1" step="1" style="width: 100%">';
+    }
+
+    /**
+     * Save meta box data
+     */
+    public function save_meta_box_data( $post_id ) {
+        // Check if our nonce is set and verify it
+        if ( ! isset( $_POST['certificate_display_order_nonce'] ) ||
+            ! wp_verify_nonce( $_POST['certificate_display_order_nonce'], 'certificate_display_order_nonce' ) ) {
+            return;
+        }
+
+        // Check user permissions
+        if ( ! current_user_can( 'edit_post', $post_id ) ) {
+            return;
+        }
+
+        // Don't save on autosave
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+            return;
+        }
+
+        // Save the display order
+        if ( isset( $_POST['certificate_display_order'] ) ) {
+            $display_order = sanitize_text_field( $_POST['certificate_display_order'] );
+            update_post_meta( $post_id, '_certificate_display_order', $display_order );
+        }
+    }
+
+    /**
+     * Add custom columns to admin list
+     */
+    public function add_admin_columns( $columns ) {
+        $new_columns = array();
+
+        // Insert display order after checkbox but before title
+        foreach( $columns as $key => $value ) {
+            if ( $key === 'cb' ) {
+                $new_columns[$key] = $value;
+                $new_columns['display_order'] = __( 'Order', 'certificates-plugin' );
+            } else {
+                $new_columns[$key] = $value;
+            }
+        }
+
+        return $new_columns;
+    }
+
+    /**
+     * Display content for custom columns
+     */
+    public function custom_column_content( $column, $post_id ) {
+        if ( 'display_order' === $column ) {
+            $order = get_post_meta( $post_id, '_certificate_display_order', true );
+            echo esc_html( $order ?: '-' );
+        }
+    }
+
+    /**
+     * Make custom columns sortable
+     */
+    public function sortable_columns( $columns ) {
+        $columns['display_order'] = 'display_order';
+        return $columns;
+    }
+
+    /**
+     * Sort by display order in admin
+     */
+    public function sort_by_display_order( $query ) {
+        if ( ! is_admin() ) {
+            return;
+        }
+
+        $orderby = $query->get( 'orderby' );
+
+        if ( 'display_order' === $orderby ) {
+            $query->set( 'meta_key', '_certificate_display_order' );
+            $query->set( 'orderby', 'meta_value_num' );
+        }
+    }
+
+    /**
+     * Use custom template for single certificate
+     *
+     * @param string $template The path of the template to include.
+     * @return string The path of the template to include.
+     */
+    public function single_template( $template ) {
+        if ( is_singular( 'certificate' ) ) {
+            // Check if a custom template exists in the theme
+            $theme_template = locate_template( array( 'single-certificate.php' ) );
+
+            // If a theme template exists, use that
+            if ( $theme_template ) {
+                return apply_filters( 'certificates_plugin_theme_single_template', $theme_template );
+            }
+
+            // Otherwise use the plugin template
+            $plugin_template = CERTIFICATES_PLUGIN_PATH . 'templates/single-certificate.php';
+
+            if ( file_exists( $plugin_template ) ) {
+                return apply_filters( 'certificates_plugin_single_template', $plugin_template );
+            }
+        }
+
+        return $template;
+    }
+
+    /**
+     * Use custom template for certificate archives
+     *
+     * @param string $template The path of the template to include.
+     * @return string The path of the template to include.
+     */
+    public function archive_template( $template ) {
+        if ( is_post_type_archive( 'certificate' ) ) {
+            // Check if a custom template exists in the theme
+            $theme_template = locate_template( array( 'archive-certificate.php' ) );
+
+            // If a theme template exists, use that
+            if ( $theme_template ) {
+                return apply_filters( 'certificates_plugin_theme_archive_template', $theme_template );
+            }
+
+            // Otherwise use the plugin template
+            $plugin_template = CERTIFICATES_PLUGIN_PATH . 'templates/archive-certificate.php';
+
+            if ( file_exists( $plugin_template ) ) {
+                return apply_filters( 'certificates_plugin_archive_template', $plugin_template );
+            }
+        }
+
+        return $template;
+    }
+}
+
+================
+File: includes/class-certificates-shortcode.php
+================
+<?php
+/**
+ * Shortcode for displaying certificates
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Class to handle certificate shortcodes.
+ */
+class Certificates_Shortcode {
+
+    /**
+     * Constructor.
+     */
+    public function __construct() {
+        // Register shortcodes
+        add_shortcode( 'certificates', array( $this, 'certificates_grid_shortcode' ) );
+
+        // Register the new shortcode-specific stylesheet
+        add_action( 'wp_enqueue_scripts', array( $this, 'register_shortcode_styles' ) );
+
+        // Add logging for debugging
+        if ( WP_DEBUG ) {
+            error_log( 'Certificates_Shortcode initialized' );
+        }
+    }
+
+    /**
+     * Register shortcode-specific stylesheet
+     */
+    public function register_shortcode_styles() {
+        wp_register_style(
+            'certificates-shortcode-style',
+            CERTIFICATES_PLUGIN_URL . 'assets/css/certificates-shortcode.css',
+            array(),
+            CERTIFICATES_PLUGIN_VERSION
+        );
+    }
+
+    /**
+     * Shortcode to display certificates in a grid layout
+     *
+     * @param array $atts Shortcode attributes.
+     * @return string HTML output.
+     */
+    public function certificates_grid_shortcode( $atts ) {
+        // Enqueue styles
+        wp_enqueue_style( 'certificates-plugin-style' );
+        wp_enqueue_style( 'certificates-responsive-style' );
+        wp_enqueue_style( 'certificates-shortcode-style' );
+
+        // Shortcode attributes
+        $atts = shortcode_atts(
+            array(
+                'count'    => -1,         // How many to display. -1 for all.
+                'columns'  => 4,          // Number of columns per row
+                'category' => '',         // Filter by category slug
+                'order'    => 'ASC',      // ASC or DESC
+            ),
+            $atts,
+            'certificates'
+        );
+
+        // Start output buffering
+        ob_start();
+
+        // Get certificates
+        $certificates = $this->get_certificates( $atts );
+
+        // Check if any certificates exist
+        if ( $certificates && $certificates->have_posts() ) {
+            // Output grid container
+            echo '<div class="row justify-content-start mt-15 mb-5">';
+            echo '<div class="certificates-grid row">';
+
+            while ( $certificates->have_posts() ) {
+                $certificates->the_post();
+
+                // Get certificate data
+                $title = get_the_title();
+                $permalink = get_permalink();
+
+                // Get card description from ACF field if available
+                $description = '';
+                if (function_exists('get_field')) {
+                    $card_description = get_field('card_description');
+                    if (!empty($card_description)) {
+                        $description = wp_kses_post($card_description);
+                    }
+                    else {
+                        // Fall back to intro field if card description is empty
+                        $intro_field = get_field('intro');
+                        if (!empty($intro_field)) {
+                            $description = wp_strip_all_tags($intro_field);
+                            $description = wp_trim_words($description, 25);
+                        }
+                    }
+                }
+
+                // If no ACF fields available, fall back to excerpt or content
+                if (empty($description)) {
+                    $description = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 20);
+                }
+
+                // Calculate column classes based on Flatsome's grid system
+                $column_class = 'small-12 large-' . (12 / intval($atts['columns']));
+
+                // Output certificate item
+                ?>
+                <div class="certificate-item col <?php echo esc_attr($column_class); ?>">
+                    <a href="<?php echo esc_url($permalink); ?>" class="certificate-link">
+                        <div class="certificate-card">
+                            <div class="certificate-card-body">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <div class="certificate-image">
+                                        <?php the_post_thumbnail('medium', array('class' => 'certificate-thumbnail rounded mx-auto d-block')); ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="certificate-content">
+                                    <h3 class="certificate-title"><?php echo esc_html($title); ?></h3>
+                                    <div class="certificate-description">
+                                        <?php echo wp_kses_post($description); ?>
+                                    </div>
+                                    <div class="certificate-button">
+                                        <span class="button secondary">Learn More</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <?php
+            }
+
+            // Close grid containers
+            echo '</div>';
+            echo '</div>';
+
+            // Reset post data
+            wp_reset_postdata();
+
+        } else {
+            // No certificates found
+            echo '<p class="no-certificates">No certificates found.</p>';
+        }
+
+        // Get buffer contents and clean buffer
+        $output = ob_get_clean();
+
+        return $output;
+    }
+
+    /**
+     * Get certificates query
+     *
+     * @param array $atts Query parameters.
+     * @return WP_Query Certificates query.
+     */
+    private function get_certificates( $atts ) {
+        // Query arguments
+        $args = array(
+            'post_type'      => 'certificate',
+            'posts_per_page' => $atts['count'],
+            'order'          => $atts['order'],
+            'orderby'        => 'meta_value_num',
+            'meta_key'       => '_certificate_display_order',
+        );
+
+        // Add category filter if specified
+        if ( ! empty( $atts['category'] ) ) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => explode( ',', $atts['category'] ),
+                ),
+            );
+        }
+
+        // Create and return query
+        return new WP_Query( $args );
+    }
+}
+
+================
+File: templates/archive-certificate.php
+================
+<?php
+/**
+ * The template for displaying certificate archives
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+get_header();
+?>
+
+    <main id="main" class="certificate-archive">
+        <div class="page-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="large-12 col">
+                        <div class="col-inner">
+                            <header class="page-header">
+                                <h1 class="page-title"><?php post_type_archive_title(); ?></h1>
+                            </header>
+
+                            <div class="certificates-grid row">
+                                <?php if ( have_posts() ) : ?>
+                                    <?php while ( have_posts() ) : the_post(); ?>
+                                        <div class="certificate-item col small-12 large-3">
+                                            <a href="<?php the_permalink(); ?>" class="certificate-link">
+                                                <div class="certificate-card">
+                                                    <div class="certificate-card-body">
+                                                        <?php if ( has_post_thumbnail() ) : ?>
+                                                            <div class="certificate-image">
+                                                                <?php the_post_thumbnail( 'medium', array( 'class' => 'certificate-thumbnail' ) ); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
+                                                        <div class="certificate-content">
+                                                            <h3 class="certificate-title"><?php the_title(); ?></h3>
+                                                            <div class="certificate-description">
+                                                                <?php
+                                                                if (function_exists('get_field')) {
+                                                                    $card_description = get_field('card_description');
+                                                                    if (!empty($card_description)) {
+                                                                        echo wp_kses_post($card_description);
+                                                                    } else {
+                                                                        the_excerpt();
+                                                                    }
+                                                                } else {
+                                                                    the_excerpt();
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                            <div class="certificate-button">
+                                                                <span class="button secondary">Learn More</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php else : ?>
+                                    <div class="col small-12">
+                                        <p class="no-certificates">No certificates found.</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <?php the_posts_pagination(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<?php
+get_footer();
+
+================
+File: templates/single-certificate.php
+================
+<?php
+/**
+ * The template for displaying single certificate posts
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Get the Flatsome theme header
+get_header();
+
+// Start the main content
+?>
+<main id="main" class="certificate-single">
+    <div class="section-wrapper credentials-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <?php echo do_shortcode('[block id="certificates-header"]'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php while ( have_posts() ) : the_post(); ?>
+    <?php
+    // Get field values
+    $overview = get_field('overview');
+    $intro = get_field('intro');
+    $prepare_apply = get_field('prepare_apply');
+    $earn_certificate = get_field('earn_certificate');
+    $next_steps = get_field('next_steps');
+    $documents = get_field('documents');
+    // Get button URL
+    $apply_button_url = get_field('apply_button_url') ?: '#';
+    ?>
+
+    <div class="container-of-boxes">
+        <!-- Sticky Menu Navigation -->
+        <div class="sticky-top" id="sticky-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="credential-sections-links">
+                            <nav>
+                                <ul class="list-inline flex-container sticky-menu">
+                                    <li class="list-inline-item">
+                                        <a href="#overview">Overview</a>
+                                    </li>
+                                    <?php if ($intro) : ?>
+                                        <li class="list-inline-item">
+                                            <a href="#intro">INTRO</a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($prepare_apply) : ?>
+                                        <li class="list-inline-item">
+                                            <a href="#prepare-apply">PREPARE &amp; APPLY</a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($earn_certificate) : ?>
+                                        <li class="list-inline-item">
+                                            <a href="#earn-certificate">EARN YOUR CERTIFICATE</a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($next_steps) : ?>
+                                        <li class="list-inline-item">
+                                            <a href="#next-steps">NEXT STEPS</a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($documents) : ?>
+                                        <li class="list-inline-item">
+                                            <a href="#documents">DOCUMENTS</a>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="section-wrapper">
+            <div class="container pb-3">
+                <div class="row pt-0">
+                    <div class="col-12">
+                        <div class="pt-2">
+                            <?php if ($overview) : ?>
+                                <?php echo $overview; ?>
+                            <?php else : ?>
+                                <p><?php echo get_the_excerpt(); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intro Section -->
+        <?php if ($intro) : ?>
+            <div id="intro" class="section-wrapper alternate-background-lightgrey">
+                <div class="container pb-5 pt-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-content">
+                                <section class="pt-5">
+                                    <h3 class="text-to-uppercase">INTRO</h3>
+                                    <span class="back-to-top">
+                                        <a href="#sticky-menu">Back to Top</a>
+                                     </span>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="certificate-field-content">
+                                                <?php echo $intro; ?>
+
+                                                <!-- Action Buttons -->
+                                                <div class="certificate-action-buttons">
+                                                    <a href="<?php echo esc_url($apply_button_url); ?>" class="button primary">APPLY NOW</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <?php if (has_post_thumbnail()) : ?>
+                                                <div class="certificate-featured-image">
+                                                    <?php
+                                                    $id = get_the_ID();
+                                                    echo get_the_post_thumbnail($id, 'medium', array(
+                                                        'class' => 'certificate-thumbnail',
+                                                        'loading' => 'lazy'
+                                                    ));
+                                                    ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Prepare & Apply Section -->
+        <?php if ($prepare_apply) : ?>
+            <div id="prepare-apply" class="section-wrapper alternate-background-white">
+                <div class="container pb-5 pt-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-content">
+                                <section class="pt-5">
+                                    <h3 class="text-to-uppercase">PREPARE &amp; APPLY</h3>
+                                    <span class="back-to-top">
+                                        <a href="#sticky-menu">Back to Top</a>
+                                    </span>
+                                    <div class="certificate-field-content">
+                                        <?php echo $prepare_apply; ?>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Earn Your Certificate Section -->
+        <?php if ($earn_certificate) : ?>
+            <div id="earn-certificate" class="section-wrapper alternate-background-lightgrey">
+                <div class="container pb-5 pt-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-content">
+                                <section class="pt-5">
+                                    <h3 class="text-to-uppercase">EARN YOUR CERTIFICATE</h3>
+                                    <span class="back-to-top">
+                                        <a href="#sticky-menu">Back to Top</a>
+                                    </span>
+                                    <div class="certificate-field-content">
+                                        <?php echo $earn_certificate; ?>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Next Steps Section -->
+        <?php if ($next_steps) : ?>
+        <div id="next-steps" class="section-wrapper alternate-background-white">
+            <div class="container pb-5 pt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-content">
+                            <section class="pt-5">
+                                <h3 class="text-to-uppercase">NEXT STEPS</h3>
+                                <span class="back-to-top">
+
+================
+File: .gitignore
+================
+cat > .gitignore << 'EOL'
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.zip
+
+# Build/dependency directories
+node_modules/
+vendor/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Compiled assets
+*.min.css
+*.min.js
+repomix-output.txt
+EOL
+
+================
+File: certificates-plugin.php
+================
+<?php
+/**
+ * Plugin Name: Certificates Plugin
+ * Plugin URI: https://yourwebsite.com/
+ * Description: A custom plugin for managing and displaying certificates with ACF integration.
+ * Version: 1.0.3
+ * Author: Orases
+ * Author URI: https://orases.com/
+ * Text Domain: certificates-plugin
+ * Domain Path: /languages
+ * Requires at least: 5.8
+ * Requires PHP: 7.4
+ *
+ * @package Certificates_Plugin
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Define plugin constants.
+define( 'CERTIFICATES_PLUGIN_VERSION', '1.0.3' );
+define( 'CERTIFICATES_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'CERTIFICATES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'CERTIFICATES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+// Check if ACF is active - renamed function to avoid conflicts
+function cert_plugin_has_acf() {
+    return class_exists( 'ACF' );
+}
+
+// Plugin initialization
+function certificates_plugin_init() {
+    // Load plugin textdomain
+    load_plugin_textdomain( 'certificates-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+    // Include required files
+    require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-cpt.php';
+
+    // Only load ACF integration if ACF is active - updated function name
+    if ( cert_plugin_has_acf() ) {
+        require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-acf.php';
+    } else {
+        // Admin notice if ACF is not active
+        add_action( 'admin_notices', 'certificates_plugin_acf_missing_notice' );
+    }
+
+    // Load shortcode functionality
+    require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-shortcode.php';
+
+    // Initialize classes
+    new Certificates_CPT();
+    if ( cert_plugin_has_acf() ) { // Updated function name
+        new Certificates_ACF();
+    }
+    new Certificates_Shortcode();
+
+    // Register assets
+    add_action( 'wp_enqueue_scripts', 'certificates_plugin_register_assets' );
+    add_action( 'admin_enqueue_scripts', 'certificates_plugin_register_admin_assets' );
+}
+add_action( 'plugins_loaded', 'certificates_plugin_init' );
+
+// Admin notice for missing ACF
+function certificates_plugin_acf_missing_notice() {
+    ?>
+    <div class="notice notice-error">
+        <p><?php _e( 'Certificates Plugin requires Advanced Custom Fields PRO to be installed and activated.', 'certificates-plugin' ); ?></p>
+    </div>
+    <?php
+}
+
+// Register front-end assets
+function certificates_plugin_register_assets() {
+    // Main CSS
+    wp_register_style(
+        'certificates-plugin-style',
+        CERTIFICATES_PLUGIN_URL . 'assets/css/certificates.css',
+        array(),
+        CERTIFICATES_PLUGIN_VERSION
+    );
+
+    // Responsive CSS
+    wp_register_style(
+        'certificates-plugin-responsive-style',
+        CERTIFICATES_PLUGIN_URL . 'assets/css/responsive-certificates.css',
+        array('certificates-plugin-style'), // This makes it load after the main CSS
+        CERTIFICATES_PLUGIN_VERSION
+    );
+
+    // Shortcode CSS
+    wp_register_style(
+        'certificates-shortcode-style',
+        CERTIFICATES_PLUGIN_URL . 'assets/css/certificates-shortcode.css',
+        array('certificates-plugin-style'),
+        CERTIFICATES_PLUGIN_VERSION
+    );
+
+    // JavaScript
+    wp_register_script(
+        'certificates-plugin-script',
+        CERTIFICATES_PLUGIN_URL . 'assets/js/certificates.js',
+        array( 'jquery' ),
+        CERTIFICATES_PLUGIN_VERSION,
+        true
+    );
+
+    // Enqueue the assets
+    wp_enqueue_style( 'certificates-plugin-style' );
+    wp_enqueue_style( 'certificates-plugin-responsive-style' );
+    wp_enqueue_script( 'certificates-plugin-script' );
+
+    // Note: We don't enqueue shortcode CSS here because it will be enqueued
+    // by the shortcode function only when the shortcode is used
+}
+
+// Register admin assets
+function certificates_plugin_register_admin_assets($hook) {
+    // Only load on specific admin pages if needed
+    if ('post.php' === $hook || 'post-new.php' === $hook) {
+        global $post;
+        if ($post && 'certificate' === $post->post_type) {
+            // Main CSS
+            wp_enqueue_style(
+                'certificates-plugin-style',
+                CERTIFICATES_PLUGIN_URL . 'assets/css/certificates.css',
+                array(),
+                CERTIFICATES_PLUGIN_VERSION
+            );
+
+            // Shortcode CSS
+            wp_enqueue_style(
+                'certificates-shortcode-style',
+                CERTIFICATES_PLUGIN_URL . 'assets/css/certificates-shortcode.css',
+                array('certificates-plugin-style'),
+                CERTIFICATES_PLUGIN_VERSION
+            );
+
+            // Responsive CSS
+            wp_enqueue_style(
+                'certificates-responsive-style',
+                CERTIFICATES_PLUGIN_URL . 'assets/css/responsive-certificates.css',
+                array('certificates-plugin-style'),
+                CERTIFICATES_PLUGIN_VERSION
+            );
+
+            // Main JS
+            wp_enqueue_script(
+                'certificates-plugin-script',
+                CERTIFICATES_PLUGIN_URL . 'assets/js/certificates.js',
+                array('jquery'),
+                CERTIFICATES_PLUGIN_VERSION,
+                true
+            );
+        }
+    }
+}
+
+// Custom breadcrumbs shortcode for certificate pages
+add_shortcode('certificate_breadcrumbs', 'certificates_breadcrumbs_shortcode');
+function certificates_breadcrumbs_shortcode() {
+    if (!is_singular('certificate')) {
+        return do_shortcode('[wpseo_breadcrumb]');
+    }
+
+    ob_start();
+
+    $post_title = get_the_title();
+    ?>
+    <span>
+        <span><a href="<?php echo home_url(); ?>">Home</a></span>
+        <span class="yoast-divider">/</span>
+        <span><a href="<?php echo home_url('/credentials/'); ?>">Credentials</a></span>
+        <span class="yoast-divider">/</span>
+        <span><a href="<?php echo home_url('/credentials/certificate/'); ?>">Certificate</a></span>
+        <span class="yoast-divider">/</span>
+        <span class="breadcrumb_last" aria-current="page"><?php echo esc_html($post_title); ?></span>
+    </span>
+    <?php
+
+    return ob_get_clean();
+}
+
+// Force registration of ACF field groups from JSON
+function certificates_force_acf_sync() {
+    if (!function_exists('acf_get_field_groups') || !function_exists('acf_add_local_field_group')) {
+        return;
+    }
+
+    // Path to the ACF JSON file
+    $json_file = CERTIFICATES_PLUGIN_PATH . 'acf-json/group_certificates_fields.json';
+    if (file_exists($json_file)) {
+        $json_content = file_get_contents($json_file);
+
+        // Check if json content is valid
+        if (!$json_content) {
+            error_log('Failed to read JSON file: ' . $json_file);
+            return;
+        }
+
+        $json_data = json_decode($json_content, true);
+
+        // Check if json_decode was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('JSON decoding error: ' . json_last_error_msg());
+            return;
+        }
+
+        // Verify json_data is an array
+        if (!is_array($json_data)) {
+            error_log('JSON data is not an array');
+            return;
+        }
+
+        acf_add_local_field_group($json_data);
+        if (WP_DEBUG) {
+            error_log('Registered field group: ' . (isset($json_data['title']) ? $json_data['title'] : 'Unknown'));
+        }
+    } else {
+        error_log('ACF JSON file not found: ' . $json_file);
+    }
+}
+add_action('acf/init', 'certificates_force_acf_sync', 20);
+
+// Activation hook
+register_activation_hook( __FILE__, 'certificates_plugin_activate' );
+function certificates_plugin_activate() {
+    // Flush rewrite rules on activation
+    require_once CERTIFICATES_PLUGIN_PATH . 'includes/class-certificates-cpt.php';
+    $cpt = new Certificates_CPT();
+    $cpt->register_post_type();
+    flush_rewrite_rules();
+
+    // Debug log on activation
+    if ( WP_DEBUG ) {
+        error_log( 'Certificates Plugin activated' );
+    }
+}
+
+// Deactivation hook
+register_deactivation_hook( __FILE__, 'certificates_plugin_deactivate' );
+function certificates_plugin_deactivate() {
+    // Flush rewrite rules on deactivation
+    flush_rewrite_rules();
+
+    // Debug log on deactivation
+    if ( WP_DEBUG ) {
+        error_log( 'Certificates Plugin deactivated' );
+    }
+}
+
+
+
+================================================================
+End of Codebase
+================================================================
