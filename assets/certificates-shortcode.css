@@ -1,0 +1,125 @@
+/**
+ * Certificates Shortcode Styles
+ */
+
+/* ----------------------------------------
+   1. GRID LAYOUT
+   ---------------------------------------- */
+.certificates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+/* ----------------------------------------
+   2. CERTIFICATE ITEM - Individual Cards
+   ---------------------------------------- */
+.certificate-item {
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.certificate-card {
+    height: 100%;
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: none; /* Remove shadow */
+    border: none; /* Remove border */
+}
+
+.certificate-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.certificate-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #F4F4F4;
+}
+
+/* ----------------------------------------
+   3. CERTIFICATE IMAGE
+   ---------------------------------------- */
+.certificate-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.certificate-thumbnail {
+    max-width: 140px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* ----------------------------------------
+   4. CERTIFICATE CONTENT - Text Elements
+   ---------------------------------------- */
+.certificate-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.certificate-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #333;
+}
+
+.certificate-description {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #7C7C7C;
+    margin-bottom: 15px;
+    text-align: center;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 110px; /* Backup for browsers that don't support line-clamp */
+}
+
+/* ----------------------------------------
+   5. CERTIFICATE BUTTON - Call to Action
+   ---------------------------------------- */
+.certificate-button {
+    text-align: center;
+    margin-top: auto;
+}
+
+.certificate-button .button {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 15px;
+    background-color: #f98e2b; /* Orange button */
+    color: #fff;
+    border: 2px solid #f98e2b;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.certificate-button .button:hover {
+    background-color: rgba(255, 255, 255, 0.64); /* Semi-transparent white background on hover */
+    color: #f98e2b; /* Orange text on hover */
+    border: 1px solid #f98e2b; /* 1px orange border */
+}
+
+/* ----------------------------------------
+   6. NO RESULTS MESSAGE
+   ---------------------------------------- */
+.no-certificates {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+    color: #666;
+}

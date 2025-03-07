@@ -1,0 +1,513 @@
+/**
+ * Certificates Plugin Styles
+ */
+
+/* ----------------------------------------
+   1. GRID LAYOUT - Archive & Shortcode
+   ---------------------------------------- */
+.certificates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.certificate-item {
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.certificate-card {
+    height: 100%;
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.certificate-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+
+.certificate-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.certificate-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.certificate-thumbnail {
+    max-width: 140px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.certificate-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.certificate-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.certificate-description {
+    font-size: 14px;
+    color: #7C7C7C;
+    margin-bottom: 15px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.certificate-button {
+    text-align: center;
+    margin-top: auto;
+}
+
+.certificate-button .button {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+/* ----------------------------------------
+   2. SECTION STRUCTURE HANDLING
+   ---------------------------------------- */
+.section-wrapper {
+    width: 100%;
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.section-wrapper.alternate-background-lightgrey {
+    background-color: #f8f8f8; /* Lighter grey to match live site */
+}
+
+.section-wrapper.alternate-background-white {
+    background-color: #FFFFFF;
+}
+
+.section-content {
+    position: relative;
+    padding: 40px 0; /* Increased from 30px to 40px */
+}
+
+/* Add more vertical spacing between sections */
+#intro, #prepare-apply, #earn-certificate, #next-steps, #documents {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/* Add padding to containers within sections */
+.section-wrapper .container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Add margin to sections */
+#overview + .section-wrapper,
+#intro + .section-wrapper,
+#prepare-apply + .section-wrapper,
+#earn-certificate + .section-wrapper,
+#next-steps + .section-wrapper {
+    margin-top: 30px;
+}
+
+/* ----------------------------------------
+   3. SINGLE CERTIFICATE PAGE
+   ---------------------------------------- */
+.certificate-single .container-of-boxes {
+    margin-bottom: 40px;
+}
+
+.certificate-single {
+    color: #444;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.certificate-single p,
+.certificate-single li,
+.certificate-single div {
+    color: #444; /* Ensure consistent text color throughout */
+}
+
+.certificate-single h2 {
+    margin-bottom: 20px;
+}
+
+.certificate-single .container {
+    max-width: 1140px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+}
+
+/* Section spacing improvements */
+#overview, #intro, #prepare-apply, #earn-certificate, #next-steps, #documents {
+    padding: 20px 0;
+}
+
+/* Row and column alignment */
+.certificate-single .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.certificate-single .col-12,
+.certificate-single .col-md-9,
+.certificate-single .col-md-3 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* ----------------------------------------
+   4. OVERVIEW SECTION
+   ---------------------------------------- */
+#overview {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#overview .container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#overview p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #444;
+    font-weight: 600;
+}
+
+/* Remove spacing that was needed for the title */
+#overview + .section-wrapper {
+    margin-top: 20px;
+}
+
+
+/* ----------------------------------------
+   5. STICKY NAVIGATION MENU
+   ---------------------------------------- */
+.sticky-top {
+    position: fixed;
+    top: 200px; /* Fixed position below Flatsome header */
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 89; /* Below Flatsome's z-index */
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: top 0.3s ease;
+    padding-top: 10px; /* Added padding to the top */
+}
+
+/* Add some space to the container to avoid content jumps */
+.container-of-boxes {
+    padding-top: 60px; /* Adjust based on your sticky nav height */
+}
+
+.credential-sections-links {
+    padding: 15px 0 10px; /* Increased top padding from 10px to 15px */
+    width: 100%;
+}
+
+.sticky-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sticky-menu li {
+    margin: 0 15px;
+}
+
+.sticky-menu a {
+    color: #333;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.sticky-menu a:hover,
+.sticky-menu a.active {
+    color: #f98e2b; /* Orange color from live site */
+    font-weight: 600;
+}
+
+/* Highlight effect for active menu item */
+.sticky-menu a.active {
+    position: relative;
+}
+
+.sticky-menu a.active:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f98e2b;
+}
+
+/* ----------------------------------------
+   6. BACK TO TOP LINKS
+   ---------------------------------------- */
+.back-to-top {
+    position: absolute;
+    top: 30px;
+    right: 0;
+}
+
+.back-to-top a {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-to-top a:hover {
+    color: #f98e2b; /* Changed from #007bff to match site orange */
+    text-decoration: none; /* Removed underline */
+}
+
+.back-to-top a:before {
+    content: "↑";
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+/* ----------------------------------------
+   7. SECTION TITLES
+   ---------------------------------------- */
+.text-to-uppercase {
+    text-transform: uppercase;
+    font-weight: 700; /* Increased from 600 to 700 for bolder headings */
+    margin-bottom: 25px; /* Increased from 20px */
+    color: #2c6c3e;
+    font-size: 24px;
+    padding-left: 0; /* Remove any indentation */
+    line-height: 1.2;
+    letter-spacing: 0.5px; /* Add slight letter spacing for emphasis */
+}
+
+/* Fix specific section title alignment */
+#intro .text-to-uppercase,
+#prepare-apply .text-to-uppercase,
+#earn-certificate .text-to-uppercase,
+#next-steps .text-to-uppercase,
+#documents .text-to-uppercase {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* Add more distinct styling to section headings */
+.certificate-single h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #2c6c3e;
+}
+
+/* Add more space after section titles */
+.text-to-uppercase + p,
+.text-to-uppercase + div,
+.text-to-uppercase + ul,
+.text-to-uppercase + ol {
+    margin-top: 15px;
+}
+
+/* ----------------------------------------
+   8. CERTIFICATE FEATURED IMAGE
+   ---------------------------------------- */
+.certificate-featured-image {
+    text-align: center;
+    margin-top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+}
+
+.certificate-featured-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    background-color: transparent !important;
+}
+
+/* ----------------------------------------
+   9. ACTION BUTTONS
+   ---------------------------------------- */
+.certificate-action-buttons {
+    margin: 20px 0;
+}
+
+.certificate-action-buttons .button,
+.certificate-action-buttons a.button {
+    margin-right: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    background-color: #f98e2b;
+    border: 2px solid #f98e2b;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+}
+
+.certificate-action-buttons .button:hover,
+.certificate-action-buttons a.button:hover {
+    background-color: transparent;
+    color: #f98e2b;
+    text-decoration: none !important;
+}
+
+/* ----------------------------------------
+   10. CONTENT FORMATTING
+   ---------------------------------------- */
+.certificate-field-content {
+    line-height: 1.6;
+    color: #444;
+    font-size: 16px;
+}
+
+.certificate-field-content h4 {
+    margin-top: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #2c6c3e; /* Match green color from the live site */
+    font-size: 18px;
+}
+
+.certificate-field-content p {
+    margin-bottom: 1.2em;
+}
+
+.certificate-field-content strong,
+.certificate-field-content b {
+    font-weight: 600;
+    color: #333;
+}
+
+.certificate-field-content ul,
+.certificate-field-content ol {
+    margin-left: 2rem;
+    margin-bottom: 1.8rem;
+    padding-left: 0;
+}
+
+.certificate-field-content ul {
+    list-style-type: disc;
+}
+
+.certificate-field-content ol {
+    list-style-type: decimal;
+}
+
+.certificate-field-content li {
+    margin-bottom: 0.8em;
+    padding-left: 0.3em;
+    line-height: 1.6;
+}
+
+/* Add space between list items */
+.certificate-field-content li + li {
+    margin-top: 8px;
+}
+
+/* Improve nested lists */
+.certificate-field-content ul ul,
+.certificate-field-content ol ol,
+.certificate-field-content ul ol,
+.certificate-field-content ol ul {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.certificate-field-content table {
+    width: auto;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.certificate-field-content table th,
+.certificate-field-content table td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.certificate-field-content table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.certificate-field-content a {
+    color: #f98e2b;
+    text-decoration: underline;
+}
+
+.certificate-field-content a:hover {
+    text-decoration: none;
+}
+
+/* ----------------------------------------
+   11. HEADER STYLING
+   ---------------------------------------- */
+/* Header background styling */
+.certificate-single .section-wrapper.credentials-header {
+    background-color: rgb(0, 44, 92);
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Ensure the header section spans full width */
+.certificate-single .credentials-header section.section {
+    background-color: rgb(0, 44, 92) !important;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Breadcrumb styling */
+.certificate-single .credentials-header span,
+.certificate-single .credentials-header span a,
+.certificate-single .credentials-header span.breadcrumb_last,
+.certificate-single .credentials-header .yoast-divider {
+    color: white !important;
+}
+
+/* Remove margin from column inside header */
+.certificate-single .credentials-header .col-12 {
+    margin: 0;
+    padding: 0;
+}
