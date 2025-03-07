@@ -57,4 +57,3 @@
             git add certificates-plugin.php
             git commit -m "Bump version to ${{ env.NEW_VERSION }}"
             git push
-    EOL
