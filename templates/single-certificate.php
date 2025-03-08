@@ -20,7 +20,7 @@ get_header();
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <?php echo do_shortcode('[block id="credentials-header-block"]'); ?>
+                        <?php echo do_shortcode('[block id="certificates-header"]'); ?>
                     </div>
                 </div>
             </div>
@@ -47,9 +47,6 @@ get_header();
                                 <section class="credential-sections-links">
                                     <nav>
                                         <ul class="list-inline flex-container sticky-menu">
-                                            <li class="list-inline-item">
-                                                <a href="#overview">Overview</a>
-                                            </li>
                                             <?php if ($intro) : ?>
                                                 <li class="list-inline-item">
                                                     <a href="#intro">INTRO</a>

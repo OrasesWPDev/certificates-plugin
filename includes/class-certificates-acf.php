@@ -391,27 +391,7 @@ class Certificates_ACF {
                     'placeholder' => '',
                     'new_lines' => '',
                 ),
-                array(
-                    'key' => 'field_overview',
-                    'label' => 'Overview',
-                    'name' => 'overview',
-                    'aria-label' => '',
-                    'type' => 'wysiwyg',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'tabs' => 'all',
-                    'toolbar' => 'full',
-                    'media_upload' => 1,
-                    'delay' => 0,
-                ),
-                array(
+               array(
                     'key' => 'field_intro',
                     'label' => 'Intro',
                     'name' => 'intro',
