@@ -5,18 +5,18 @@
 /* ----------------------------------------
    1. GRID LAYOUT - Archive & Shortcode
    ---------------------------------------- */
-.certificates-grid {
+.certificates-plugin-grid {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 2rem;
 }
 
-.certificate-item {
+.certificates-plugin-item {
     padding: 15px;
     margin-bottom: 30px;
 }
 
-.certificate-card {
+.certificates-plugin-card {
     height: 100%;
     background-color: #F4F4F4;
     border-radius: 5px;
@@ -25,43 +25,43 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.certificate-card:hover {
+.certificates-plugin-card:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transform: translateY(-5px);
 }
 
-.certificate-card-body {
+.certificates-plugin-card-body {
     padding: 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.certificate-image {
+.certificates-plugin-image {
     text-align: center;
     margin-bottom: 15px;
 }
 
-.certificate-thumbnail {
+.certificates-plugin-thumbnail {
     max-width: 140px;
     height: auto;
     border-radius: 5px;
 }
 
-.certificate-content {
+.certificates-plugin-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.certificate-title {
+.certificates-plugin-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.certificate-description {
+.certificates-plugin-description {
     font-size: 14px;
     color: #7C7C7C;
     margin-bottom: 15px;
@@ -69,12 +69,12 @@
     flex-grow: 1;
 }
 
-.certificate-button {
+.certificates-plugin-button {
     text-align: center;
     margin-top: auto;
 }
 
-.certificate-button .button {
+.certificates-plugin-button .button {
     font-size: 14px;
     padding: 5px 15px;
 }
@@ -82,22 +82,22 @@
 /* ----------------------------------------
    2. SECTION STRUCTURE HANDLING
    ---------------------------------------- */
-.section-wrapper {
+.certificates-plugin-section-wrapper {
     width: 100%;
     position: relative;
     margin-left: 0;
     margin-right: 0;
 }
 
-.section-wrapper.alternate-background-lightgrey {
+.certificates-plugin-section-wrapper.alternate-background-lightgrey {
     background-color: #f8f8f8; /* Lighter grey to match live site */
 }
 
-.section-wrapper.alternate-background-white {
+.certificates-plugin-section-wrapper.alternate-background-white {
     background-color: #FFFFFF;
 }
 
-.section-content {
+.certificates-plugin-section-content {
     position: relative;
     padding: 40px 0; /* Increased from 30px to 40px */
 }
@@ -109,43 +109,43 @@
 }
 
 /* Add padding to containers within sections */
-.section-wrapper .container {
+.certificates-plugin-section-wrapper .container {
     padding-top: 20px;
     padding-bottom: 40px;
 }
 
 /* Add margin to sections */
-#overview + .section-wrapper,
-#intro + .section-wrapper,
-#prepare-apply + .section-wrapper,
-#earn-certificate + .section-wrapper,
-#next-steps + .section-wrapper {
+#overview + .certificates-plugin-section-wrapper,
+#intro + .certificates-plugin-section-wrapper,
+#prepare-apply + .certificates-plugin-section-wrapper,
+#earn-certificate + .certificates-plugin-section-wrapper,
+#next-steps + .certificates-plugin-section-wrapper {
     margin-top: 30px;
 }
 
 /* ----------------------------------------
    3. SINGLE CERTIFICATE PAGE
    ---------------------------------------- */
-.certificate-single .container-of-boxes {
+.certificates-plugin-single .certificates-plugin-container {
     margin-bottom: 40px;
 }
 
-.certificate-single {
+.certificates-plugin-single {
     color: #444;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-.certificate-single p,
-.certificate-single li,
-.certificate-single div {
+.certificates-plugin-single p,
+.certificates-plugin-single li,
+.certificates-plugin-single div {
     color: #444; /* Ensure consistent text color throughout */
 }
 
-.certificate-single h2 {
+.certificates-plugin-single h2 {
     margin-bottom: 20px;
 }
 
-.certificate-single .container {
+.certificates-plugin-single .container {
     max-width: 1140px;
     padding-left: 15px;
     padding-right: 15px;
@@ -158,16 +158,16 @@
 }
 
 /* Row and column alignment */
-.certificate-single .row {
+.certificates-plugin-single .row {
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
 }
 
-.certificate-single .col-12,
-.certificate-single .col-md-9,
-.certificate-single .col-md-3 {
+.certificates-plugin-single .col-12,
+.certificates-plugin-single .col-md-9,
+.certificates-plugin-single .col-md-3 {
     position: relative;
     width: 100%;
     padding-right: 15px;
@@ -195,7 +195,7 @@
 }
 
 /* Remove spacing that was needed for the title */
-#overview + .section-wrapper {
+#overview + .certificates-plugin-section-wrapper {
     margin-top: 20px;
 }
 
@@ -203,7 +203,7 @@
 /* ----------------------------------------
    5. STICKY NAVIGATION MENU
    ---------------------------------------- */
-.sticky-top {
+.certificates-plugin-sticky-top {
     position: fixed;
     top: 200px; /* Fixed position below Flatsome header */
     left: 0;
@@ -218,16 +218,16 @@
 }
 
 /* Add some space to the container to avoid content jumps */
-.container-of-boxes {
+.certificates-plugin-container {
     padding-top: 60px; /* Adjust based on your sticky nav height */
 }
 
-.credential-sections-links {
+.certificates-plugin-sections-links {
     padding: 15px 0 10px; /* Increased top padding from 10px to 15px */
     width: 100%;
 }
 
-.sticky-menu {
+.certificates-plugin-sticky-menu {
     display: flex;
     list-style: none;
     margin: 0;
@@ -236,11 +236,11 @@
     justify-content: center;
 }
 
-.sticky-menu li {
+.certificates-plugin-sticky-menu li {
     margin: 0 15px;
 }
 
-.sticky-menu a {
+.certificates-plugin-sticky-menu a {
     color: #333;
     font-weight: 500;
     text-transform: uppercase;
@@ -249,18 +249,18 @@
     transition: color 0.3s ease;
 }
 
-.sticky-menu a:hover,
-.sticky-menu a.active {
+.certificates-plugin-sticky-menu a:hover,
+.certificates-plugin-sticky-menu a.active {
     color: #f98e2b; /* Orange color from live site */
     font-weight: 600;
 }
 
 /* Highlight effect for active menu item */
-.sticky-menu a.active {
+.certificates-plugin-sticky-menu a.active {
     position: relative;
 }
 
-.sticky-menu a.active:after {
+.certificates-plugin-sticky-menu a.active:after {
     content: '';
     position: absolute;
     bottom: -5px;
@@ -273,13 +273,13 @@
 /* ----------------------------------------
    6. BACK TO TOP LINKS
    ---------------------------------------- */
-.back-to-top {
+.certificates-plugin-back-to-top {
     position: absolute;
     top: 30px;
     right: 0;
 }
 
-.back-to-top a {
+.certificates-plugin-back-to-top a {
     font-size: 14px;
     color: #666;
     text-decoration: none;
@@ -287,12 +287,12 @@
     align-items: center;
 }
 
-.back-to-top a:hover {
+.certificates-plugin-back-to-top a:hover {
     color: #f98e2b; /* Changed from #007bff to match site orange */
     text-decoration: none; /* Removed underline */
 }
 
-.back-to-top a:before {
+.certificates-plugin-back-to-top a:before {
     content: "↑";
     margin-right: 5px;
     font-size: 12px;
@@ -301,7 +301,7 @@
 /* ----------------------------------------
    7. SECTION TITLES
    ---------------------------------------- */
-.text-to-uppercase {
+.certificates-plugin-text-uppercase {
     text-transform: uppercase;
     font-weight: 700; /* Increased from 600 to 700 for bolder headings */
     margin-bottom: 25px; /* Increased from 20px */
@@ -313,17 +313,17 @@
 }
 
 /* Fix specific section title alignment */
-#intro .text-to-uppercase,
-#prepare-apply .text-to-uppercase,
-#earn-certificate .text-to-uppercase,
-#next-steps .text-to-uppercase,
-#documents .text-to-uppercase {
+#intro .certificates-plugin-text-uppercase,
+#prepare-apply .certificates-plugin-text-uppercase,
+#earn-certificate .certificates-plugin-text-uppercase,
+#next-steps .certificates-plugin-text-uppercase,
+#documents .certificates-plugin-text-uppercase {
     padding-left: 0;
     margin-left: 0;
 }
 
 /* Add more distinct styling to section headings */
-.certificate-single h3 {
+.certificates-plugin-single h3 {
     margin-top: 30px;
     margin-bottom: 20px;
     font-weight: 700;
@@ -331,17 +331,17 @@
 }
 
 /* Add more space after section titles */
-.text-to-uppercase + p,
-.text-to-uppercase + div,
-.text-to-uppercase + ul,
-.text-to-uppercase + ol {
+.certificates-plugin-text-uppercase + p,
+.certificates-plugin-text-uppercase + div,
+.certificates-plugin-text-uppercase + ul,
+.certificates-plugin-text-uppercase + ol {
     margin-top: 15px;
 }
 
 /* ----------------------------------------
    8. CERTIFICATE FEATURED IMAGE
    ---------------------------------------- */
-.certificate-featured-image {
+.certificates-plugin-featured-image {
     text-align: center;
     margin-top: 0;
     height: 100%;
@@ -351,7 +351,7 @@
     background-color: transparent !important;
 }
 
-.certificate-featured-image img {
+.certificates-plugin-featured-image img {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
@@ -362,12 +362,12 @@
 /* ----------------------------------------
    9. ACTION BUTTONS
    ---------------------------------------- */
-.certificate-action-buttons {
+.certificates-plugin-action-buttons {
     margin: 20px 0;
 }
 
-.certificate-action-buttons .button,
-.certificate-action-buttons a.button {
+.certificates-plugin-action-buttons .button,
+.certificates-plugin-action-buttons a.button {
     margin-right: 10px;
     font-weight: 600;
     text-transform: uppercase;
@@ -380,8 +380,8 @@
     text-decoration: none !important;
 }
 
-.certificate-action-buttons .button:hover,
-.certificate-action-buttons a.button:hover {
+.certificates-plugin-action-buttons .button:hover,
+.certificates-plugin-action-buttons a.button:hover {
     background-color: transparent;
     color: #f98e2b;
     text-decoration: none !important;
@@ -390,13 +390,13 @@
 /* ----------------------------------------
    10. CONTENT FORMATTING
    ---------------------------------------- */
-.certificate-field-content {
+.certificates-plugin-field-content {
     line-height: 1.6;
     color: #444;
     font-size: 16px;
 }
 
-.certificate-field-content h4 {
+.certificates-plugin-field-content h4 {
     margin-top: 1.8rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -404,74 +404,74 @@
     font-size: 18px;
 }
 
-.certificate-field-content p {
+.certificates-plugin-field-content p {
     margin-bottom: 1.2em;
 }
 
-.certificate-field-content strong,
-.certificate-field-content b {
+.certificates-plugin-field-content strong,
+.certificates-plugin-field-content b {
     font-weight: 600;
     color: #333;
 }
 
-.certificate-field-content ul,
-.certificate-field-content ol {
+.certificates-plugin-field-content ul,
+.certificates-plugin-field-content ol {
     margin-left: 2rem;
     margin-bottom: 1.8rem;
     padding-left: 0;
 }
 
-.certificate-field-content ul {
+.certificates-plugin-field-content ul {
     list-style-type: disc;
 }
 
-.certificate-field-content ol {
+.certificates-plugin-field-content ol {
     list-style-type: decimal;
 }
 
-.certificate-field-content li {
+.certificates-plugin-field-content li {
     margin-bottom: 0.8em;
     padding-left: 0.3em;
     line-height: 1.6;
 }
 
 /* Add space between list items */
-.certificate-field-content li + li {
+.certificates-plugin-field-content li + li {
     margin-top: 8px;
 }
 
 /* Improve nested lists */
-.certificate-field-content ul ul,
-.certificate-field-content ol ol,
-.certificate-field-content ul ol,
-.certificate-field-content ol ul {
+.certificates-plugin-field-content ul ul,
+.certificates-plugin-field-content ol ol,
+.certificates-plugin-field-content ul ol,
+.certificates-plugin-field-content ol ul {
     margin-top: 8px;
     margin-bottom: 8px;
 }
 
-.certificate-field-content table {
+.certificates-plugin-field-content table {
     width: auto;
     margin-bottom: 1rem;
     border-collapse: collapse;
 }
 
-.certificate-field-content table th,
-.certificate-field-content table td {
+.certificates-plugin-field-content table th,
+.certificates-plugin-field-content table td {
     padding: 8px 12px;
     border: 1px solid #e0e0e0;
 }
 
-.certificate-field-content table th {
+.certificates-plugin-field-content table th {
     background-color: #f5f5f5;
     font-weight: 600;
 }
 
-.certificate-field-content a {
+.certificates-plugin-field-content a {
     color: #f98e2b;
     text-decoration: underline;
 }
 
-.certificate-field-content a:hover {
+.certificates-plugin-field-content a:hover {
     text-decoration: none;
 }
 
@@ -479,7 +479,7 @@
    11. HEADER STYLING
    ---------------------------------------- */
 /* Header background styling */
-.certificate-single .section-wrapper.credentials-header {
+.certificates-plugin-single .certificates-plugin-section-wrapper.certificates-plugin-header {
     background-color: rgb(0, 44, 92);
     padding-left: 0;
     padding-right: 0;
@@ -490,7 +490,7 @@
 }
 
 /* Ensure the header section spans full width */
-.certificate-single .credentials-header section.section {
+.certificates-plugin-single .certificates-plugin-header section.section {
     background-color: rgb(0, 44, 92) !important;
     margin-left: 0;
     margin-right: 0;
@@ -499,15 +499,15 @@
 }
 
 /* Breadcrumb styling */
-.certificate-single .credentials-header span,
-.certificate-single .credentials-header span a,
-.certificate-single .credentials-header span.breadcrumb_last,
-.certificate-single .credentials-header .yoast-divider {
+.certificates-plugin-single .certificates-plugin-header span,
+.certificates-plugin-single .certificates-plugin-header span a,
+.certificates-plugin-single .certificates-plugin-header span.breadcrumb_last,
+.certificates-plugin-single .certificates-plugin-header .yoast-divider {
     color: white !important;
 }
 
 /* Remove margin from column inside header */
-.certificate-single .credentials-header .col-12 {
+.certificates-plugin-single .certificates-plugin-header .col-12 {
     margin: 0;
     padding: 0;
 }
@@ -515,8 +515,8 @@
 /* ----------------------------------------
    12. FOOTER STYLING
    ---------------------------------------- */
-footer a.back-to-top,
+footer a.certificates-plugin-back-to-top,
 footer a#top-link,
-a[href="#top"].back-to-top {
+a[href="#top"].certificates-plugin-back-to-top {
     display: none !important;
 }

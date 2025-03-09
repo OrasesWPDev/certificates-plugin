@@ -5,7 +5,7 @@
 /* ----------------------------------------
    1. GRID LAYOUT
    ---------------------------------------- */
-.certificates-grid {
+.certificates-plugin-grid {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 2rem;
@@ -14,12 +14,12 @@
 /* ----------------------------------------
    2. CERTIFICATE ITEM - Individual Cards
    ---------------------------------------- */
-.certificate-item {
+.certificates-plugin-item {
     padding: 15px;
     margin-bottom: 30px;
 }
 
-.certificate-card {
+.certificates-plugin-card {
     height: 100%;
     background-color: #F4F4F4;
     border-radius: 5px;
@@ -29,12 +29,12 @@
     border: none; /* Remove border */
 }
 
-.certificate-card:hover {
+.certificates-plugin-card:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transform: translateY(-5px);
 }
 
-.certificate-card-body {
+.certificates-plugin-card-body {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -45,12 +45,12 @@
 /* ----------------------------------------
    3. CERTIFICATE IMAGE
    ---------------------------------------- */
-.certificate-image {
+.certificates-plugin-image {
     text-align: center;
     margin-bottom: 15px;
 }
 
-.certificate-thumbnail {
+.certificates-plugin-thumbnail {
     max-width: 140px;
     height: auto;
     border-radius: 5px;
@@ -59,13 +59,13 @@
 /* ----------------------------------------
    4. CERTIFICATE CONTENT - Text Elements
    ---------------------------------------- */
-.certificate-content {
+.certificates-plugin-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.certificate-title {
+.certificates-plugin-title {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -73,7 +73,7 @@
     color: #333;
 }
 
-.certificate-description {
+.certificates-plugin-description {
     font-size: 12px;
     line-height: 1.5;
     color: #7C7C7C;
@@ -90,12 +90,12 @@
 /* ----------------------------------------
    5. CERTIFICATE BUTTON - Call to Action
    ---------------------------------------- */
-.certificate-button {
+.certificates-plugin-button {
     text-align: center;
     margin-top: auto;
 }
 
-.certificate-button .button {
+.certificates-plugin-button .button {
     font-size: 14px;
     font-weight: 600;
     padding: 8px 15px;
@@ -107,7 +107,7 @@
     transition: all 0.3s ease;
 }
 
-.certificate-button .button:hover {
+.certificates-plugin-button .button:hover {
     background-color: rgba(255, 255, 255, 0.64); /* Semi-transparent white background on hover */
     color: #f98e2b; /* Orange text on hover */
     border: 1px solid #f98e2b; /* 1px orange border */
@@ -116,7 +116,7 @@
 /* ----------------------------------------
    6. NO RESULTS MESSAGE
    ---------------------------------------- */
-.no-certificates {
+.certificates-plugin-none {
     padding: 20px;
     text-align: center;
     width: 100%;

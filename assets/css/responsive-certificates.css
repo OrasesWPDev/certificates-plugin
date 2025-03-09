@@ -7,15 +7,15 @@
    ---------------------------------------- */
 @media (max-width: 767px) {
     /* Sticky Menu */
-    .sticky-menu li {
+    .certificates-plugin-sticky-menu li {
         margin: 0 8px;
     }
 
-    .sticky-menu a {
+    .certificates-plugin-sticky-menu a {
         font-size: 12px;
     }
 
-    .back-to-top {
+    .certificates-plugin-back-to-top {
         position: relative;
         top: 0;
         right: 0;
@@ -25,15 +25,15 @@
     }
 
     /* Certificate Cards */
-    .certificate-title {
+    .certificates-plugin-title {
         font-size: 14px;
     }
 
-    .certificate-description {
+    .certificates-plugin-description {
         font-size: 12px;
     }
 
-    .certificate-button .button {
+    .certificates-plugin-button .button {
         font-size: 12px;
         padding: 3px 10px;
     }
@@ -53,7 +53,7 @@
    2. MEDIUM SCREENS (TABLETS)
    ---------------------------------------- */
 @media (min-width: 768px) and (max-width: 991px) {
-    .certificate-item {
+    .certificates-plugin-item {
         padding: 10px;
     }
 
@@ -61,19 +61,19 @@
         padding-top: 30px;
     }
 
-    .certificate-card-body {
+    .certificates-plugin-card-body {
         padding: 15px;
     }
 
-    .certificate-title {
+    .certificates-plugin-title {
         font-size: 15px;
     }
 
-    .certificate-description {
+    .certificates-plugin-description {
         font-size: 13px;
     }
 
-    .sticky-menu li {
+    .certificates-plugin-sticky-menu li {
         margin: 0 10px;
     }
 }
@@ -82,7 +82,7 @@
    3. LARGE SCREENS ADJUSTMENTS
    ---------------------------------------- */
 @media (min-width: 992px) {
-    .certificate-card:hover {
+    .certificates-plugin-card:hover {
         transform: translateY(-5px);
     }
 
@@ -108,12 +108,12 @@
 }
 
 @media (min-width: 768px) {
-    .certificate-single .col-md-9 {
+    .certificates-plugin-single .col-md-9 {
         flex: 0 0 75%;
         max-width: 75%;
     }
 
-    .certificate-single .col-md-3 {
+    .certificates-plugin-single .col-md-3 {
         flex: 0 0 25%;
         max-width: 25%;
     }
@@ -124,31 +124,31 @@
    ---------------------------------------- */
 @media (max-width: 767px) {
     /* Shortcode Card Styles - Mobile */
-    .certificate-title {
+    .certificates-plugin-title {
         font-size: 13px;
     }
 
-    .certificate-description {
+    .certificates-plugin-description {
         font-size: 11px;
     }
 
-    .certificate-button .button {
+    .certificates-plugin-button .button {
         font-size: 12px;
         padding: 4px 12px;
     }
 
-    .certificate-thumbnail {
+    .certificates-plugin-thumbnail {
         max-width: 120px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     /* Shortcode Card Styles - Tablet */
-    .certificate-card-body {
+    .certificates-plugin-card-body {
         padding: 15px;
     }
 
-    .certificate-title {
+    .certificates-plugin-title {
         font-size: 13px;
     }
 }

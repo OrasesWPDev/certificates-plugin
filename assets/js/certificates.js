@@ -6,7 +6,7 @@
 
     $(document).ready(function() {
         // Smooth scroll for sticky menu links only
-        $('.sticky-menu a').on('click', function(e) {
+        $('.certificates-plugin-sticky-menu a').on('click', function(e) {
             if (this.hash !== '') {
                 e.preventDefault();
                 const hash = this.hash;
@@ -18,7 +18,7 @@
         });
 
         // Handle "Back to Top" links separately - scroll to page top
-        $('.back-to-top a').on('click', function(e) {
+        $('.certificates-plugin-back-to-top a').on('click', function(e) {
             e.preventDefault();
 
             // Scroll to the top of the page
@@ -38,8 +38,8 @@
                 const sectionBottom = sectionTop + currentSection.outerHeight();
 
                 if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    $('.sticky-menu a').removeClass('active');
-                    $('.sticky-menu a[href="#' + currentSection.attr('id') + '"]').addClass('active');
+                    $('.certificates-plugin-sticky-menu a').removeClass('active');
+                    $('.certificates-plugin-sticky-menu a[href="#' + currentSection.attr('id') + '"]').addClass('active');
                 }
             });
         });
