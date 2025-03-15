@@ -152,3 +152,63 @@
         font-size: 13px;
     }
 }
+
+/* ----------------------------------------
+   6. CERTIFICATE IMAGES RESPONSIVE STYLES
+   ---------------------------------------- */
+/* Large tablets and small desktops */
+@media (max-width: 1199px) {
+    .certificates-image-item {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* Medium-sized tablets */
+@media (max-width: 991px) {
+    .certificates-image-item {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+
+    /* Adjust spacing for better appearance on tablets */
+    .certificates-images-row {
+        margin: 0 -10px;
+    }
+
+    .certificates-image-item {
+        padding: 10px;
+    }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 767px) {
+    .certificates-image-item {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    /* Reduce hover effect on touch devices */
+    .certificates-image-item:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .certificates-image-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 10px 20px;
+    }
+
+    /* Center images on mobile */
+    .certificates-image-thumbnail {
+        max-width: 80%;
+    }
+
+    /* Minimal hover effect on small mobile */
+    .certificates-image-item:hover {
+        transform: translateY(-2px);
+    }
+}

@@ -21,9 +21,15 @@ class Certificates_Shortcode {
 	public function __construct() {
 		// Register shortcodes
 		add_shortcode( 'certificates', array( $this, 'certificates_shortcode' ) );
+		add_shortcode( 'certificate_images', array( $this, 'certificate_images_shortcode' ) );
 
 		// Register the shortcode-specific stylesheet
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_shortcode_styles' ) );
+
+		// Add logging for debugging
+		if ( WP_DEBUG ) {
+			error_log( 'Certificates_Shortcode initialized' );
+		}
 	}
 
 	/**
@@ -120,16 +126,13 @@ class Certificates_Shortcode {
 							<?php echo get_the_post_thumbnail($certificate, 'medium', array('class' => 'certificates-plugin-thumbnail')); ?>
                         </div>
 					<?php endif; ?>
-
                     <div class="certificates-plugin-content">
 						<?php if ($atts['show_title']): ?>
                             <h3 class="certificates-plugin-title"><?php echo esc_html($title); ?></h3>
 						<?php endif; ?>
-
                         <div class="certificates-plugin-description">
 							<?php echo wp_kses_post($description); ?>
                         </div>
-
                         <div class="certificates-plugin-button">
                             <a href="<?php echo esc_url($permalink); ?>" class="button secondary">
 								<?php echo esc_html($atts['button_text']); ?>
@@ -189,16 +192,13 @@ class Certificates_Shortcode {
 										<?php the_post_thumbnail('medium', array('class' => 'certificates-plugin-thumbnail')); ?>
                                     </div>
 								<?php endif; ?>
-
                                 <div class="certificates-plugin-content">
 									<?php if ($atts['show_title']): ?>
                                         <h3 class="certificates-plugin-title"><?php echo esc_html($title); ?></h3>
 									<?php endif; ?>
-
                                     <div class="certificates-plugin-description">
 										<?php echo wp_kses_post($description); ?>
                                     </div>
-
                                     <div class="certificates-plugin-button">
                                         <span class="button secondary"><?php echo esc_html($atts['button_text']); ?></span>
                                     </div>
@@ -261,6 +261,95 @@ class Certificates_Shortcode {
 		}
 
 		return $description;
+	}
+
+	/**
+	 * Shortcode to display certificate featured images in a grid
+	 *
+	 * @param array $atts Shortcode attributes.
+	 * @return string HTML output.
+	 */
+	public function certificate_images_shortcode( $atts ) {
+		// Enqueue styles
+		wp_enqueue_style( 'certificates-plugin-style' );
+		wp_enqueue_style( 'certificates-responsive-style' );
+		wp_enqueue_style( 'certificates-shortcode-style' );
+
+		// Default attributes
+		$atts = shortcode_atts(
+			array(
+				'cache' => 'true',  // Whether to cache results
+			),
+			$atts,
+			'certificate_images'
+		);
+
+		// Convert string boolean to actual boolean
+		$cache = filter_var($atts['cache'], FILTER_VALIDATE_BOOLEAN);
+
+		// Start output buffering
+		ob_start();
+
+		// Get cached output if caching is enabled
+		$cache_key = 'certificate_images_' . md5(serialize($atts));
+		$cached_output = $cache ? get_transient($cache_key) : false;
+		if ($cached_output !== false) {
+			echo $cached_output;
+			return ob_get_clean();
+		}
+
+		// Query all certificate posts ordered by meta value for display order
+		$certificates = new WP_Query( array(
+			'post_type'      => 'certificate',
+			'posts_per_page' => -1,
+			'orderby'        => 'meta_value_num',
+			'meta_key'       => '_certificate_display_order',
+			'order'          => 'ASC',
+		) );
+
+		if ( $certificates->have_posts() ) {
+			// Modified HTML structure with clearer class names
+			echo '<div class="certificates-images-container">';
+			echo '<div class="certificates-images-row">'; // This is the flex container
+
+			$counter = 0;
+			while ( $certificates->have_posts() ) {
+				$certificates->the_post();
+
+				if ( has_post_thumbnail() ) {
+					// Only create a new row after every 4 items (not before the first item)
+					if ( $counter > 0 && $counter % 4 === 0 ) {
+						echo '</div><div class="certificates-images-row">';
+					}
+
+					// Each item is explicitly 25% width
+					echo '<div class="certificates-image-item">';
+					echo '<a href="' . esc_url( get_permalink() ) . '">';
+					the_post_thumbnail( 'medium', array( 'class' => 'certificates-image-thumbnail' ) );
+					echo '</a>';
+					echo '</div>';
+
+					$counter++;
+				}
+			}
+
+			echo '</div>'; // Close the last row
+			echo '</div>'; // Close the container
+
+			wp_reset_postdata();
+		} else {
+			echo '<p class="certificates-no-results">No certificate images found.</p>';
+		}
+
+		// Get buffer contents
+		$output = ob_get_clean();
+
+		// Cache the output if caching is enabled
+		if ($cache) {
+			set_transient($cache_key, $output, HOUR_IN_SECONDS);
+		}
+
+		return $output;
 	}
 
 	/**

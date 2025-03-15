@@ -263,6 +263,55 @@ class Certificates_Help {
                 <code>[certificates show_title="false" desc_length="0"]</code>
             </div>
             <p>This displays certificates without titles and descriptions, showing only the images and buttons.</p>
+
+            <!-- New Shortcode Documentation -->
+            <h2>Shortcode: [certificate_images]</h2>
+            <p>This shortcode displays a grid of certificate featured images that link to their respective certificate pages.</p>
+
+            <h3>Basic Usage</h3>
+            <div class="certificates-plugin-code-block">
+                <code>[certificate_images]</code>
+            </div>
+            <p>This displays all certificate featured images in a 4-column grid, with each image linking to its certificate page.</p>
+
+            <h3>Display Options</h3>
+            <table class="certificates-plugin-help-table">
+                <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Default</th>
+                    <th>Options</th>
+                    <th>Examples</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>cache</code></td>
+                    <td>Whether to cache the output for better performance</td>
+                    <td>true</td>
+                    <td>true, false</td>
+                    <td><code>cache="false"</code></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Examples</h3>
+
+            <h4>Display Without Caching</h4>
+            <div class="certificates-plugin-code-block">
+                <code>[certificate_images cache="false"]</code>
+            </div>
+            <p>This displays certificate images without caching the output, ensuring fresh content on every page load.</p>
+
+            <h3>Features</h3>
+            <ul>
+                <li>Automatically displays featured images from all certificate posts</li>
+                <li>Images are arranged in a responsive grid (4 columns on desktop, 3 on tablets, 2 on mobile)</li>
+                <li>Each image links directly to its certificate page</li>
+                <li>Images have a subtle hover effect (rise up slightly)</li>
+                <li>Performance optimized with transient caching</li>
+            </ul>
         </div>
 		<?php
 	}
@@ -473,6 +522,18 @@ class Certificates_Help {
                         <p>This will limit the description to 15 words. The default is 25 words.</p>
                     </div>
                 </div>
+
+                <!-- New FAQ Item for certificate_images shortcode -->
+                <div class="certificates-plugin-faq-item">
+                    <h4>How do I display only certificate images in a grid?</h4>
+                    <div class="certificates-plugin-faq-answer">
+                        <p>Use the <code>[certificate_images]</code> shortcode:</p>
+                        <div class="certificates-plugin-code-block">
+                            <code>[certificate_images]</code>
+                        </div>
+                        <p>This will display all certificate featured images in a responsive grid, with each image linking to its certificate page.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="certificates-plugin-card">
@@ -498,6 +559,19 @@ class Certificates_Help {
                             <li>Check that you have entered content in the custom fields for your certificates</li>
                             <li>Try resaving your certificate posts</li>
                             <li>If you're using a custom template, make sure it's correctly calling the ACF functions</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- New FAQ Item for certificate_images troubleshooting -->
+                <div class="certificates-plugin-faq-item">
+                    <h4>Certificate images are not appearing in the grid</h4>
+                    <div class="certificates-plugin-faq-answer">
+                        <ol>
+                            <li>Ensure all your certificates have featured images set</li>
+                            <li>Try disabling caching by using <code>[certificate_images cache="false"]</code></li>
+                            <li>Check that your theme is not overriding the plugin's CSS</li>
+                            <li>Verify that the images are of reasonable size and properly formatted</li>
                         </ol>
                     </div>
                 </div>
